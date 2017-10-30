@@ -1,1 +1,12 @@
-<h1>I am a header</h1>
+<h1>Header Title</h1>
+
+<ul>
+    {{# if login }}
+        <li><a href="/user/profile">User Account</a></li>
+        <hr>
+        <li><a href="/user/logout">Logout</a></li>
+    {{ else }}
+        <li><a href="/user/signup">Sign up</a></li>
+        <li><a href="/user/signin">Sign in</a></li>
+    {{/if}}
+</ul>

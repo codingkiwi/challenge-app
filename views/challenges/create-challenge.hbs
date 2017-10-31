@@ -6,3 +6,37 @@
         {{/each}}
     </div> 
 {{/if}}
+<form action="/challenge/create-challenge" method="post">
+    <ul>
+        <li>
+            <label for="name">Challenge Name</label>
+            <input type="text" id="name" name="name" class="form-control"> 
+        </li>
+        <li>
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" class="form-control">
+        </li>
+        <li>
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="startDate" class="form-control">
+        </li>
+        <li>
+            <label for="startDate">End Date</label>
+            <input type="date" id="endDate" name="endDate" class="form-control"> 
+        </li>
+            <label for="creationDate">End Date</label>
+            <input type="date" id="creationDate" name="creationDate" class="form-control"> 
+        <li>
+            <label for="goal">Goal Description</label>
+            <input type="text" id="goal" name="goal" class="form-control"> 
+        </li>
+        <li>
+            <label for="categories">Category</label>
+            <input type="text" id="category" name="category" class="form-control"> 
+        </li>
+        <li>
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <button type="submit" class="btn btn-primary">Sign Un</button>
+        </li>
+    </ul>
+</form>

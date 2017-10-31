@@ -22,6 +22,7 @@ router.get('/create-challenge', function(req, res, next){
 });
 
 router.post('/create-challenge', function(req, res, next){
+    //add server side validation here
     var newChallenge = new Challenge({
         name : req.body.name,
         description: req.body.description,

@@ -15,6 +15,11 @@ router.get('/logout', isLoggedIn, function(req, res, next){
     res.redirect('/');
 });
 
+router.get('/dashboard', isLoggedIn, function(req, res, next){
+    var messages = req.flash('error');
+    res.render('dashboard/dashboard-home', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
+});
+
 router.use('/', notLoggedIn, function(req, res, next) {
     next();
 })
@@ -25,7 +30,7 @@ router.get('/signup', function(req, res, next){
 })
 
 router.post('/signup', passport.authenticate('local.signup', {
-    successRedirect: '/user/profile',
+    successRedirect: '/user/dashboard',
     failureRedirect: '/user/signup',
     failureFlash: true
 }));
@@ -36,7 +41,7 @@ router.get('/signin', function(req, res, next){
 });
 
 router.post('/signin', passport.authenticate('local.signin', {
-    successRedirect: '/user/profile',
+    successRedirect: '/user/dashboard',
     failureRedirect: '/user/signin',
     failureFlash: true
 }));

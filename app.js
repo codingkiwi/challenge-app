@@ -13,7 +13,8 @@ var validator = require('express-validator');
 var mongoStore = require('connect-mongo')(session);
 
 var index = require('./routes/index');
-var userRoutes = require('./routes/user')
+var userRoutes = require('./routes/user');
+var challengeRoutes = require('./routes/challenge');
 
 var app = express();
 
@@ -50,6 +51,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/user', userRoutes);
+app.use('/challenge', challengeRoutes);
 app.use('/', index);
 
 // catch 404 and forward to error handler

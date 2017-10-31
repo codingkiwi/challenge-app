@@ -41,8 +41,9 @@ router.post('/create-challenge', function(req, res, next){
     newChallenge.save(function(err, result) {
         if (err) {
             console.log(err);
+            req.flash('error', 'Data not valid');  
             var messages = req.flash('error');
-            res.render('/create-challenge');
+            res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0})
         }
         else {
             res.redirect('/user/dashboard');

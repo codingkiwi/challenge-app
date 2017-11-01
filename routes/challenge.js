@@ -18,9 +18,12 @@ router.get('/', function(req, res, next){
     console.log('redirected to dashboard');
 });
 
-router.get('/create-challenge', function(req, res, next){
-    var messages = req.flash('error');
-    res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
+router.get('/remove-from-challenge/:challengeID', function(req, res, next){
+    res.redirect('/user/dashboard');
+});
+
+router.get('/delete-challenge/:userID', function(req, res, next){
+    res.redirect('/user/dashboard');
 });
 
 router.post('/create-challenge', function(req, res, next){

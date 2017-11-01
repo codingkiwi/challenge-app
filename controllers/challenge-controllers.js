@@ -1,7 +1,7 @@
 var express = require('express');
 var Challenge = require('../models/challenge');
 
-module.exports = function ChallengeController(){
+module.exports = function challengeController(req, res, next){
     this.createChallenge = function(){
         var newChallenge = new Challenge({
             name : req.body.name,
@@ -20,6 +20,7 @@ module.exports = function ChallengeController(){
             categories :  [req.body.categories]      
         });
         return newChallenge;
+        next();
     }
 };
 

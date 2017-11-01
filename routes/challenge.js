@@ -26,6 +26,11 @@ router.get('/delete-challenge/:userID', function(req, res, next){
     res.redirect('/user/dashboard');
 });
 
+router.get('/create-challenge', function(req, res, next){
+    var messages = req.flash('error');
+    res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
+});
+
 router.post('/create-challenge', function(req, res, next){
     challengeController.createChallenge(req, res, next);
 });

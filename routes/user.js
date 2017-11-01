@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
-var challenge = require('../models/challenge');
+var Challenge = require('../models/challenge');
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
@@ -18,7 +18,7 @@ router.get('/logout', isLoggedIn, function(req, res, next){
 
 router.get('/dashboard', isLoggedIn, function(req, res, next){
     var messages = req.flash('error');
-    challenge.find({ particiapnts: req.userId }).exec(function(err, result){
+    Challenge.find({ "participants.participantID": req.user.id }).exec(function(err, result){
         if(err){
             req.flash('error', 'Error retrieving challenges from database');    
             res.render('dashboard/dashboard-home', {challenges: result, csrfToken: req.csrfToken(), messages: {}, hasErrors: messages.length > 0}); 

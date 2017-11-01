@@ -1,8 +1,8 @@
 var express = require('express');
 var Challenge = require('../models/challenge');
 
-module.exports = function challengeController(req, res, next){
-    this.createChallenge = function(){
+module.exports = function ChallengeController(){
+    this.createChallenge = function(req, res, next){
         var newChallenge = new Challenge({
             name : req.body.name,
             description: req.body.description,
@@ -19,8 +19,19 @@ module.exports = function challengeController(req, res, next){
             ],
             categories :  [req.body.categories]      
         });
-        return newChallenge;
-        next();
+        newChallenge.save(function(err, result) {
+            if (err) {
+                console.log(err);
+                req.flash('error', 'Data not valid');  
+                var messages = req.flash('error');
+                res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0})
+            }
+            else {
+                res.redirect('/user/dashboard');
+                console.log("redirected to dashboard")
+            }
+        });
     }
+    return next();
 };
 

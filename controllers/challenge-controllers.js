@@ -32,6 +32,5 @@ module.exports = function ChallengeController(){
             }
         });
     }
-    return next();
 };
 

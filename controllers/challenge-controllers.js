@@ -17,7 +17,8 @@ module.exports = function ChallengeController(){
             startDate : req.body.startDate,
             endDate : req.body.endDate,
             creationDate : req.body.startDate,
-            goal : req.body.goal,
+            goalType : req.body.goalType,
+            goalAmount : req.body.goalAmount,
             participants : [
                 {
                     participantID: req.user.id,

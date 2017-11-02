@@ -6,7 +6,8 @@ var challengeSchema = mongoose.Schema({
     startDate: {type: Date, required: true},
     endDate: {type: Date, required: true},
     creationDate: {type: Date, required: true},
-    goal : {type: String, required: true},
+    goalType : {type: String, required: true},
+    goalAmount: {type: Number, required: true},
     participants : {type : [], required: true},
     categories : {type: [String], required: true}
 });

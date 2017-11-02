@@ -1,4 +1,4 @@
-<h1>Dashboard</h1>
+<h1>Discover</h1>
 {{#if hasErrors}}
     <div class="alert alert-danger">
         {{#each messages}}
@@ -6,13 +6,10 @@
         {{/each}}
     </div> 
 {{/if}}
-<a href="/challenge/create-challenge">Create Challenge</a>
 {{#each challenges}}
     <h3>
         {{this.name}}
     </h3>
     <p>{{this.description}}</p>
-    <a href="/challenge/delete-challenge/{{this.id}}">Delete Challenge</a>
-    <a href="/challenge/remove-from-challenge/{{../userId}}/{{this.id}}">Quit Challenge</a>
 {{/each}}
 

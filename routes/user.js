@@ -23,7 +23,6 @@ router.get('/dashboard', isLoggedIn, function(req, res, next){
             req.flash('error', 'Error retrieving challenges from database');    
             res.render('dashboard/dashboard-home', {userId: req.user.id, challenges: result, csrfToken: req.csrfToken(), messages: {}, hasErrors: messages.length > 0}); 
         }
-        console.log(req.user.id);
         res.render('dashboard/dashboard-home', {userId: req.user.id, challenges: result, csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});                
     });
 });

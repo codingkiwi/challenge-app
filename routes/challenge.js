@@ -34,6 +34,18 @@ router.post('/create-challenge', function(req, res, next){
     challengeController.createChallenge(req, res, next);
 });
 
+router.get('/discover', function(req, res, next){
+    var messages = req.flash('error');
+    Challenge.find({}).exec(function(err, result){
+        if(err){
+            req.flash('error', 'Error retrieving challenges from database'); 
+            res.render('challenges/discover', {challenges: {}, messages: messages});
+        }
+        res.render('challenges/discover', {challenges: result, messages: messages});
+    });
+    
+});
+
 module.exports = router;
 
 function isLoggedIn(req, res, next){

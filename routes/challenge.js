@@ -30,9 +30,7 @@ router.get('/create-challenge', function(req, res, next){
     res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
 });
 
-router.post('/create-challenge', function(req, res, next){
-    challengeController.createChallenge(req, res, next);
-});
+router.post('/create-challenge', challengeController.createChallenge)
 
 router.get('/discover', function(req, res, next){
     var messages = req.flash('error');
@@ -45,6 +43,8 @@ router.get('/discover', function(req, res, next){
     });
     
 });
+
+router.get('/join-challenge/:challengeId', challengeController.joinChallenge);
 
 module.exports = router;
 

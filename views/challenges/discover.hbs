@@ -2,7 +2,7 @@
 {{#if hasErrors}}
     <div class="alert alert-danger">
         {{#each messages}}
-            <p>{{ this}}</p>
+            <p>{{this}}</p>
         {{/each}}
     </div> 
 {{/if}}
@@ -11,5 +11,6 @@
         {{this.name}}
     </h3>
     <p>{{this.description}}</p>
+    <a href="/challenge/join-challenge/{{this.id}}">Join Challenge</a>
 {{/each}}
 

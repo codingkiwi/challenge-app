@@ -21,7 +21,6 @@ module.exports = function ChallengeController(){
             participants : [
                 {
                     participantID: req.user.id,
-                    participantName: req.user.name,
                     participantRole: "admin"
                 }
             ],
@@ -68,6 +67,30 @@ module.exports = function ChallengeController(){
             }
             else {
                 console.log("challenge removed");
+                res.redirect('/user/dashboard');                
+            }
+        })
+    }
+
+    this.joinChallenge = function(req, res, next){
+        Challenge.update({
+            "_id" : req.params.challengeId
+        },
+        {
+            $addToSet: {participants : 
+                { 
+                    "participantID" : req.user.id,
+                    "participantRole" : "admin"
+                }
+            },
+        }, 
+        function(err, result){
+            if (err){
+                console.log(err);
+                res.redirect('/user/dashboard');
+            }
+            else {
+                console.log("user joined challenge" + req.params.challengeId);
                 res.redirect('/user/dashboard');                
             }
         })

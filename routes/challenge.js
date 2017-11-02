@@ -15,15 +15,14 @@ router.use('/', isLoggedIn, function(req, res, next) {
 
 router.get('/', function(req, res, next){
     res.redirect('/user/dashboard');
-    console.log('redirected to dashboard');
 });
 
-router.get('/remove-from-challenge/:challengeID', function(req, res, next){
-    res.redirect('/user/dashboard');
+router.get('/remove-from-challenge/:userId/:challengeId', function(req, res, next){
+    challengeController.removeFromChallenge(req, res, next);
 });
 
-router.get('/delete-challenge/:userID', function(req, res, next){
-    res.redirect('/user/dashboard');
+router.get('/delete-challenge/:challengeId', function(req, res, next){
+    challengeController.deleteChallenge(req, res, next);
 });
 
 router.get('/create-challenge', function(req, res, next){

@@ -1,3 +1,11 @@
+//
+// challenge-controller
+// Contains helper functions and logic for actions that manipulate challenges
+// Exports a function to be used as a contructor and then the member functions 
+// invoked as middleware by passing (req, res, next)
+//
+//
+
 var express = require('express');
 var Challenge = require('../models/challenge');
 
@@ -20,7 +28,7 @@ module.exports = function ChallengeController(){
             categories :  [req.body.categories]      
         });
         newChallenge.save(function(err, result) {
-            if (err) {
+            if (err){
                 console.log(err);
                 req.flash('error', 'Data not valid');  
                 var messages = req.flash('error');
@@ -28,9 +36,41 @@ module.exports = function ChallengeController(){
             }
             else {
                 res.redirect('/user/dashboard');
-                console.log("redirected to dashboard")
+                console.log("redirected to dashboard");
             }
         });
+    }
+
+    this.deleteChallenge = function(req, res, next){
+        Challenge.remove({"_id" : req.params.challengeId}, function(err, result){
+            if (err){
+                console.log(err);
+                res.redirect('/user/dashboard');
+            }
+            else {
+                res.redirect('/user/dashboard');
+            }
+        })
+        console.log("challenge removed");
+    }
+
+    this.removeFromChallenge = function(req, res, next){
+        Challenge.update({
+            "_id" : req.params.challengeId
+        },
+        {
+            $pull: {participants : { "participantID" : req.params.userId} },
+        }, 
+        function(err, result){
+            if (err){
+                console.log(err);
+                res.redirect('/user/dashboard');
+            }
+            else {
+                console.log("challenge removed");
+                res.redirect('/user/dashboard');                
+            }
+        })
     }
 };
 

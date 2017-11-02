@@ -2,11 +2,11 @@
 <p><strong>userid:</strong> {{session.passport.user}}</p>
 
 <ul>
-    {{# if login }}
+    {{#if login}}
         <li><a href="/user/profile">User Account</a></li>
         <hr>
         <li><a href="/user/logout">Logout</a></li>
-    {{ else }}
+    {{else}}
         <li><a href="/user/signup">Sign up</a></li>
         <li><a href="/user/signin">Sign in</a></li>
     {{/if}}

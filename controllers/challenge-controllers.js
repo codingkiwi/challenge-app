@@ -28,7 +28,6 @@ module.exports = function ChallengeController(){
             errors.forEach(function(error) {
                 messages.push(error.msg);
             });
-            req.flash('error', messages);
             res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0})
         }
         else {

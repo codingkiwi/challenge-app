@@ -52,8 +52,7 @@ router.get('/:challengeId', function(req, res, next){
         else {
             res.send('howdy');
         }
-    });
-    
+    }); 
 });
 
 router.get('/join-challenge/:challengeId', challengeController.joinChallenge);

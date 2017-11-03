@@ -47,16 +47,10 @@ router.get('/discover', function(req, res, next){
 router.get('/:challengeId', function(req, res, next){
     Challenge.find({"_id": req.params.challengeId}).exec(function(err, result){
         if(err){
-            req.flash('error', 'Error retrieving challenge from database'); 
-            res.render('challenges/discover', {challenges: {}, messages: {}});
+            res.send('error retrieving challenge');
         }
         else {
-            if(result){
-                res.send('howdy');
-            }
-            else{
-                res.send('not found');
-            }
+            res.send('howdy');
         }
     });
     

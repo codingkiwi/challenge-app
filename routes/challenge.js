@@ -45,12 +45,12 @@ router.get('/discover', function(req, res, next){
 });
 
 router.get('/:challengeId', function(req, res, next){
-    Challenge.find({"_id": req.params.challengeId}).exec(function(err, result){
+    Challenge.findOne({"_id": req.params.challengeId}).exec(function(err, result){
         if(err){
-            res.send('error retrieving challenge');
+            res.redirect('/challenge/discover');            
         }
         else {
-            res.send('howdy');
+            res.render('challenges/challenge-detail', {challenge: result});
         }
     }); 
 });

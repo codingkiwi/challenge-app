@@ -17,24 +17,6 @@ router.get('/', function(req, res, next){
     res.redirect('/user/dashboard');
 });
 
-router.get('/:challengeId', function(req, res, next){
-    Challenge.find({"_id": req.params.challengeId}).exec(function(err, result){
-        if(err){
-            req.flash('error', 'Error retrieving challenge from database'); 
-            res.render('challenges/discover', {challenges: {}, messages: {}});
-        }
-        else {
-            if(result){
-                res.send('howdy');
-            }
-            else{
-                res.send('not found');
-            }
-        }
-    });
-    
-});
-
 router.get('/remove-from-challenge/:userId/:challengeId', function(req, res, next){
     challengeController.removeFromChallenge(req, res, next);
 });
@@ -58,6 +40,24 @@ router.get('/discover', function(req, res, next){
             res.render('challenges/discover', {challenges: {}, messages: messages});
         }
         res.render('challenges/discover', {challenges: result, messages: messages});
+    });
+    
+});
+
+router.get('/:challengeId', function(req, res, next){
+    Challenge.find({"_id": req.params.challengeId}).exec(function(err, result){
+        if(err){
+            req.flash('error', 'Error retrieving challenge from database'); 
+            res.render('challenges/discover', {challenges: {}, messages: {}});
+        }
+        else {
+            if(result){
+                res.send('howdy');
+            }
+            else{
+                res.send('not found');
+            }
+        }
     });
     
 });

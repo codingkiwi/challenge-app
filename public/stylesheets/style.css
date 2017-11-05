@@ -1,8 +1,14 @@
+/* https://color.adobe.com/create/color-wheel/?base=2&rule=Monochromatic&selected=3&name=My%20Color%20Theme&mode=rgb&rgbvalues=0.1337923674817531,0.4264312031450381,0.5,0.545091855682451,0.908611831416982,1,0.2675847349635062,0.8528624062900761,1,0.20531877066100646,0.44080040508950713,0.5,0.21406778797080497,0.682289925032061,0.8&swatchOrder=0,1,2,3,4 */
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px 'Nunito', sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  color: #37AECC;
+
+}
+
+a:hover{
+  color: #34707F;
 }

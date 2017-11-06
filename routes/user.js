@@ -3,6 +3,7 @@ var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
 var Challenge = require('../models/challenge');
+var User = require('../models/user');
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
@@ -59,6 +60,15 @@ module.exports = router;
 
 function isLoggedIn(req, res, next){
     if (req.isAuthenticated()) {
+        User.findOne({"_id" : req.user.id}, function(err, result){
+            if(err){
+                res.locals.username = "error retrieving username";
+            }
+            if(!result){
+                res.locals.username = "error retrieving username";
+            }
+            res.locals.username = result.username;
+        });
         return next();
     }
     res.redirect('/');

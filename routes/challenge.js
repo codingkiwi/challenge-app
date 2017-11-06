@@ -26,14 +26,14 @@ router.get('/delete-challenge/:challengeId', function(req, res, next){
     challengeController.deleteChallenge(req, res, next);
 });
 
-router.get('/create-challenge', function(req, res, next){
+router.get('/create-challenge', challengeController.storeCurrentUser, function(req, res, next){
     var messages = req.flash('error');
     res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
 });
 
 router.post('/create-challenge', challengeController.storeCurrentUser, challengeController.createChallenge)
 
-router.get('/discover', function(req, res, next){
+router.get('/discover', challengeController.storeCurrentUser, function(req, res, next){
     var messages = req.flash('error');
     Challenge.find({}).exec(function(err, result){
         if(err){
@@ -45,7 +45,7 @@ router.get('/discover', function(req, res, next){
     
 });
 
-router.get('/:challengeId', function(req, res, next){
+router.get('/:challengeId', challengeController.storeCurrentUser, function(req, res, next){
     Challenge.findOne({"_id": req.params.challengeId}).exec(function(err, result){
         if(err){
             res.redirect('/challenge/discover');            

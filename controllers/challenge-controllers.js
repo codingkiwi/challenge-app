@@ -8,11 +8,27 @@
 
 var express = require('express');
 var Challenge = require('../models/challenge');
+var User = require('../models/user');
 
 module.exports = function ChallengeController(){
     //create challenge from Challenge model and save to DB
     //ON ERROR - flash error and return to challenge creation
     //ON SUCCESS - redirect to dashboard
+    this.storeCurrentUser = function(req, res, next){
+        User.findOne({"_id" : req.user.id}, function(err, result){
+            if(err){
+                res.locals.username = "error retrieving username";
+                next();
+            }
+            if(!result){
+                res.locals.username = "error retrieving username";
+                next();
+            }
+            res.locals.username = result.username;
+            next();
+        });
+    }
+
     this.createChallenge = function(req, res, next){
         //Form validation using express-validator
         req.checkBody('name', 'No challenge name entered').notEmpty();
@@ -42,7 +58,8 @@ module.exports = function ChallengeController(){
                 participants : [
                     {
                         participantID: req.user.id,
-                        participantRole: "admin"
+                        participantRole: "admin",
+                        participantUsername: res.locals.username
                     }
                 ],
                 categories :  [req.body.categories]      
@@ -95,6 +112,7 @@ module.exports = function ChallengeController(){
     }
 
     this.joinChallenge = function(req, res, next){
+        console.log(res.locals.username);
         Challenge.update({
             "_id" : req.params.challengeId
         },
@@ -102,7 +120,8 @@ module.exports = function ChallengeController(){
             $addToSet: {participants : 
                 { 
                     "participantID" : req.user.id,
-                    "participantRole" : "admin"
+                    "participantRole" : "admin",
+                    "participantUsername" : res.locals.username
                 }
             },
         }, 

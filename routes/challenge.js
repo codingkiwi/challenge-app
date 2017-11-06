@@ -3,6 +3,7 @@ var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
 var Challenge = require('../models/challenge');
+
 var ChallengeController = require('../controllers/challenge-controllers');
 
 var challengeController = new ChallengeController();
@@ -30,7 +31,7 @@ router.get('/create-challenge', function(req, res, next){
     res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
 });
 
-router.post('/create-challenge', challengeController.createChallenge)
+router.post('/create-challenge', challengeController.storeCurrentUser, challengeController.createChallenge)
 
 router.get('/discover', function(req, res, next){
     var messages = req.flash('error');
@@ -55,7 +56,7 @@ router.get('/:challengeId', function(req, res, next){
     }); 
 });
 
-router.get('/join-challenge/:challengeId', challengeController.joinChallenge);
+router.get('/join-challenge/:challengeId', challengeController.storeCurrentUser, challengeController.joinChallenge);
 
 module.exports = router;
 

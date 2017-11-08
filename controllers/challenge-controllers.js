@@ -89,6 +89,7 @@ module.exports = function ChallengeController(){
             }
             if (!challenge){
                 console.log("no challenge found");
+                req.flash('error', 'Action not allowed'); 
                 res.redirect('/user/dashboard');
             }
             else {

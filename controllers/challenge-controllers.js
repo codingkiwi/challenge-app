@@ -80,17 +80,34 @@ module.exports = function ChallengeController(){
     }
 
     this.deleteChallenge = function(req, res, next){
-        Challenge.remove({"_id" : req.params.challengeId}, function(err, result){
+        Challenge.findOneAndRemove({"_id" : req.params.challengeId, "participants" : {
+            $elemMatch : {participantID : req.user.id, participantRole : "admin"}
+        }},function(err, challenge){
             if (err){
                 console.log(err);
                 res.redirect('/user/dashboard');
             }
+            if (!challenge){
+                console.log("no challenge found");
+                res.redirect('/user/dashboard');
+            }
             else {
+                console.log("challenge deleted");
                 res.redirect('/user/dashboard');
             }
         })
-        console.log("challenge removed");
     }
+        // Challenge.remove({"_id" : req.params.challengeId}, function(err, result){
+        //     if (err){
+        //         console.log(err);
+        //         res.redirect('/user/dashboard');
+        //     }
+        //     else {
+        //         res.redirect('/user/dashboard');
+        //     }
+        // })
+        // console.log("challenge deleted");
+    // }
 
     this.removeFromChallenge = function(req, res, next){
         Challenge.update({
@@ -112,7 +129,6 @@ module.exports = function ChallengeController(){
     }
 
     this.joinChallenge = function(req, res, next){
-        console.log(res.locals.username);
         Challenge.update({
             "_id" : req.params.challengeId
         },
@@ -120,7 +136,7 @@ module.exports = function ChallengeController(){
             $addToSet: {participants : 
                 { 
                     "participantID" : req.user.id,
-                    "participantRole" : "admin",
+                    "participantRole" : "participant",
                     "participantUsername" : res.locals.username
                 }
             },

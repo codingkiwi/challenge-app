@@ -1,5 +1,11 @@
 var mongoose = require('mongoose');
 
+var participantSchema = mongoose.Schema({
+    participantID : {type: mongoose.Schema.Types.ObjectId},
+    participantRole: {type: String},
+    participantUsername: {type: String}
+});
+
 var challengeSchema = mongoose.Schema({
     name : {type: String, required: true},
     description : {type: String, required: true},
@@ -8,7 +14,7 @@ var challengeSchema = mongoose.Schema({
     creationDate: {type: Date, required: true},
     goalType : {type: String, required: true},
     goalAmount: {type: Number, required: true},
-    participants : {type : [], required: true},
+    participants : {type : [participantSchema], required: true},
     categories : {type: [String], required: true}
 });
 

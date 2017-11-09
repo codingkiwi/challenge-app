@@ -40,7 +40,12 @@ router.get('/discover', challengeController.storeCurrentUser, function(req, res,
             req.flash('error', 'Error retrieving challenges from database'); 
             res.render('challenges/discover', {challenges: {}, messages: messages});
         }
-        res.render('challenges/discover', {challenges: result, messages: messages});
+        var challengeChunk = [];
+        var chunkSize = 3;
+        for (var i = 0; i < result.length; i += chunkSize) {
+            challengeChunk.push(result.slice(i, i + chunkSize));
+        }
+        res.render('challenges/discover', {challenges: challengeChunk, messages: messages});
     });
     
 });

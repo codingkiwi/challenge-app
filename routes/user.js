@@ -20,8 +20,13 @@ router.get('/dashboard', isLoggedIn, function(req, res, next){
             req.flash('error', 'Error retrieving challenges from database');    
             res.render('dashboard/dashboard-home', {userId: req.user.id, challenges: {}, csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0}); 
         }
+        var challengeChunk = [];
+        var chunkSize = 3;
+        for (var i = 0; i < result.length; i += chunkSize) {
+        challengeChunk.push(result.slice(i, i + chunkSize));
+    }
         var messages = req.flash('error');
-        res.render('dashboard/dashboard-home', {userId: req.user.id, challenges: result, csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});                
+        res.render('dashboard/dashboard-home', {userId: req.user.id, challenges: challengeChunk, csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});                
     });
 });
 

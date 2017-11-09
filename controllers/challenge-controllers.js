@@ -17,7 +17,7 @@ module.exports = function ChallengeController(){
     this.storeCurrentUser = function(req, res, next){
         User.findOne({"_id" : req.user.id}, function(err, result){
             if(err){
-                res.locals.username = "No Logged In";
+                res.locals.username = "Not Logged In";
                 next();
             }
             if(!result){

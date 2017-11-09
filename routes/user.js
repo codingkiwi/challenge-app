@@ -8,10 +8,6 @@ var User = require('../models/user');
 var csrfProtection = csrf();
 router.use(csrfProtection);
 
-router.get('/profile', isLoggedIn, function(req, res, next) {
-    res.render('user/profile');
-});
-
 router.get('/logout', isLoggedIn, function(req, res, next){
     req.logout();
     res.redirect('/');
@@ -27,6 +23,11 @@ router.get('/dashboard', isLoggedIn, function(req, res, next){
         var messages = req.flash('error');
         res.render('dashboard/dashboard-home', {userId: req.user.id, challenges: result, csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});                
     });
+});
+
+router.get('/profile', isLoggedIn, storeCurrentUser, function(req, res, next) {
+    var messages = req.flash('error');
+    res.render('user/profile', {messages: {}, hasErrors: false});
 });
 
 router.use('/', notLoggedIn, function(req, res, next) {
@@ -68,6 +69,7 @@ function isLoggedIn(req, res, next){
                 res.locals.username = "error retrieving username";
             }
             res.locals.username = result.username;
+            console.log('ping');
         });
         return next();
     }
@@ -79,4 +81,22 @@ function notLoggedIn(req, res, next){
         return next();
     }
     res.redirect('/');
+}
+
+function storeCurrentUser(req, res, next){
+    User.findOne({"_id" : req.user.id}, function(err, result){
+        if(err){
+            res.locals.username = "Not Logged In";
+            res.locals.userFull = "Not Logged In"
+            next();
+        }
+        if(!result){
+            res.locals.username = "Not Logged In";
+            res.locals.userFull = "Not Logged In"
+            next();
+        }
+        res.locals.username = result.username;
+        res.locals.userFull = result;
+        next();
+    });
 }

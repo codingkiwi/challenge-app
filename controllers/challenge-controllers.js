@@ -98,17 +98,6 @@ module.exports = function ChallengeController(){
             }
         })
     }
-        // Challenge.remove({"_id" : req.params.challengeId}, function(err, result){
-        //     if (err){
-        //         console.log(err);
-        //         res.redirect('/user/dashboard');
-        //     }
-        //     else {
-        //         res.redirect('/user/dashboard');
-        //     }
-        // })
-        // console.log("challenge deleted");
-    // }
 
     this.removeFromChallenge = function(req, res, next){
         Challenge.update({

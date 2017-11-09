@@ -2,4 +2,12 @@
     <h3>Challenge Detail</h3>
     <h1>{{name}}</h1>
     <p>{{description}}</p>
+    <h2>Participants</h2>
+    {{#each participants}}
+        {{#if participantUsername}}
+            <a href="#">{{participantUsername}}</a>
+        {{/if}}
+        <p>{{participantRole}}</p>
+        <br>
+    {{/each}}
 {{/with}}

@@ -1,48 +1,50 @@
-<h1>Create Challenge</h1>
-{{#if hasErrors}}
-    <div class="alert alert-danger">
-        {{# each messages }}
-            <p>{{ this }}</p>
-        {{/each}}
-    </div> 
-{{/if}}
-<form action="/challenge/create-challenge" method="post">
-    <ul>
-        <li>
-            <label for="name">Challenge Name</label>
-            <input type="text" id="name" name="name" class="form-control"> 
-        </li>
-        <li>
-            <label for="description">Description</label>
-            <input type="text" id="description" name="description" class="form-control">
-        </li>
-        <li>
-            <label for="startDate">Start Date</label>
-            <input type="date" id="startDate" name="startDate" class="form-control">
-        </li>
-        <li>
-            <label for="startDate">End Date</label>
-            <input type="date" id="endDate" name="endDate" class="form-control"> 
-        </li>
-        <li>
-            <label for="goalType">Goal Type</label>
-            <select id="goalType" name="goalType" class="form-control"> 
-                <option value="firstToGoal">First To The Goal</option>
-                <option value="getToGoal">Any To The Goal</option>
-                <option value="everyDay">Every Day Until...</option>
-            </select>
-        </li>
-        <li>
-            <label for="goalAmount">Goal Amount</label>
-            <input type="number" id="goalAmount" name="goalAmount" class="form-control" min="0"> 
-        </li>
-        <li>
-            <label for="categories">Category</label>
-            <input type="text" id="categories" name="categories" class="form-control"> 
-        </li>
-        <li>
-            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-            <button type="submit">Create Challenge</button>
-        </li>
-    </ul>
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h1>Create Challenge</h1>
+            {{#if hasErrors}}
+                <div class="alert alert-danger">
+                    {{# each messages }}
+                        <p>{{ this }}</p>
+                    {{/each}}
+                </div> 
+            {{/if}}
+            <form action="/challenge/create-challenge" method="post">
+                    <div class="form-group">
+                        <label for="name">Challenge Name</label>
+                        <input type="text" id="name" name="name" class="form-control"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" id="startDate" name="startDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">End Date</label>
+                        <input type="date" id="endDate" name="endDate" class="form-control"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="goalType">Goal Type</label>
+                        <select id="goalType" name="goalType" class="form-control"> 
+                            <option value="firstToGoal">First To The Goal</option>
+                            <option value="getToGoal">Any To The Goal</option>
+                            <option value="everyDay">Every Day Until...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="goalAmount">Goal Amount</label>
+                        <input type="number" id="goalAmount" name="goalAmount" class="form-control" min="0"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="categories">Category</label>
+                        <input type="text" id="categories" name="categories" class="form-control"> 
+                    </div>
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <button type="submit" class="btn btn-primary">Create Challenge</button>
+            </form>
+        </div>
+    </div>
+</div>

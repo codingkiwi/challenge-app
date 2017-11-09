@@ -4,6 +4,10 @@ body {
   font: 14px 'Nunito', sans-serif;
 }
 
+h1, h2, h3, h4 {
+  font-family: 'Oswald', sans-serif;
+}
+
 a {
   color: #37AECC;
 
@@ -11,4 +15,32 @@ a {
 
 a:hover{
   color: #34707F;
+}
+
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.form-control:focus{
+  border-color: #00B3BB; 
+  box-shadow: 0 0 8px #34707F; 
+  -webkit-box-shadow: 0 0 8px #34707F;
+  box-shadow: 0 0 8px #34707F;
+} 
+.btn {
+  background-color: #FF7600;
+  border-color: rgb(207, 96, 4);
+}
+.btn:active {
+  background-color:rgb(199, 88, 3);
+  background-color:rgb(161, 73, 5);
+}
+.btn:hover {
+  background-color:rgb(199, 88, 3);
+  background-color:rgb(161, 73, 5);
+}
+.btn:focus {
+  background-color:rgb(199, 88, 3);
+  background-color:rgb(161, 73, 5);
 }

@@ -50,18 +50,24 @@ router.get('/discover', challengeController.storeCurrentUser, function(req, res,
     
 });
 
-router.get('/:challengeId', challengeController.storeCurrentUser, function(req, res, next){
-    Challenge.findOne({"_id": req.params.challengeId}).exec(function(err, result){
-        if(err){
-            res.redirect('/challenge/discover');            
-        }
-        else {
-            res.render('challenges/challenge-detail', {challenge: result});
-        }
-    }); 
+router.post('/add-progress', challengeController.storeCurrentUser, challengeController.addProgress);
+
+router.get('/add-progress', challengeController.storeCurrentUser, function(req, res, next){
+    res.redirect('/challenge/discover');
 });
 
 router.get('/join-challenge/:challengeId', challengeController.storeCurrentUser, challengeController.joinChallenge);
+
+router.get('/:challengeId', challengeController.storeCurrentUser, function(req, res, next){
+    Challenge.findOne({"_id": req.params.challengeId}).exec(function(err, result){
+        if(err){
+            res.redirect('challenge/discover');            
+        }
+        else {
+            res.render('challenges/challenge-detail', {message: req.flash('error'), hasErrors: req.flash('errpr').length > 0, challenge: result, csrfToken: req.csrfToken()});
+        }
+    }); 
+});
 
 module.exports = router;
 

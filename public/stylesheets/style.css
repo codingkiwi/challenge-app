@@ -28,19 +28,19 @@ h1 {
   -webkit-box-shadow: 0 0 8px #34707F;
   box-shadow: 0 0 8px #34707F;
 } 
-.btn {
+.btn, .btn-primary {
   background-color: #FF7600;
   border-color: rgb(207, 96, 4);
 }
-.btn:active {
+.btn:active, .btn-primary:active {
   background-color:rgb(199, 88, 3);
   background-color:rgb(161, 73, 5);
 }
-.btn:hover {
+.btn:hover, .btn-primary:hover {
   background-color:rgb(199, 88, 3);
   background-color:rgb(161, 73, 5);
 }
-.btn:focus {
+.btn:focus, .btn-primary:focus {
   background-color:rgb(199, 88, 3);
   background-color:rgb(161, 73, 5);
 }

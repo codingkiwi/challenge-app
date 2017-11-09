@@ -62,7 +62,8 @@ module.exports = function ChallengeController(){
                         participantUsername: res.locals.username
                     }
                 ],
-                categories :  [req.body.categories]      
+                categories :  [req.body.categories],
+                progress: []      
             });
             newChallenge.save(function(err, result) {
                 if (err){
@@ -141,6 +142,46 @@ module.exports = function ChallengeController(){
                 res.redirect('/user/dashboard');                
             }
         })
+    }
+
+    this.addProgress = function(req, res, next){
+        req.checkBody('amount', 'Not a valid amount').notEmpty();
+        var errors = req.validationErrors();
+        if(errors){
+            errors.forEach(function(error) {
+                req.flash('error', error);
+            });
+            url = '/challenge/' + req.body.challengeId;
+            //TODO: fix redirect to render so errors are displayed
+            res.redirect(url);
+        }
+        else{
+            Challenge.update({
+                "_id" : req.body.challengeId
+            },
+            {
+                $push: {progress:
+                    {
+                        "progressParticipant" : req.user.id,
+                        "progressDate" : new Date(),
+                        "progressAmounts" : req.body.amount,
+                        "progressLikes" : 0
+                    }
+                },
+            },
+            function(err, result){
+                if (err){
+                    console.log(err);
+                    res.redirect('/user/dashboard');
+                }
+                else {
+                    console.log("user added progress to " + req.body.challengeId);
+                    url = '/challenge/' + req.body.challengeId;
+                    res.redirect(url);               
+                }
+            })
+        }
+
     }
 };
 

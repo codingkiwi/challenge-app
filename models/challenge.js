@@ -7,10 +7,11 @@ var participantSchema = mongoose.Schema({
 });
 
 var progressSchema = mongoose.Schema({
-    progressParticipant : {type: mongoose.Schema.Types.ObjectId},
-    progressDate : {type: Date},
-    progressAmounts : {type: Number},
-    progressLikes : {type: Number}
+    progressParticipantId : {type: mongoose.Schema.Types.ObjectId},
+    progressParticipantName : {type: String, required: true},
+    progressDate : {type: Date, required: true},
+    progressAmounts : {type: Number, required: true},
+    progressLikes : {type: Number, required: true}
 });
 
 var challengeSchema = mongoose.Schema({

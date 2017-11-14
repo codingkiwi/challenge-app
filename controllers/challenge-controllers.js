@@ -11,9 +11,7 @@ var Challenge = require('../models/challenge');
 var User = require('../models/user');
 
 module.exports = function ChallengeController(){
-    //create challenge from Challenge model and save to DB
-    //ON ERROR - flash error and return to challenge creation
-    //ON SUCCESS - redirect to dashboard
+
     this.storeCurrentUser = function(req, res, next){
         User.findOne({"_id" : req.user.id}, function(err, result){
             if(err){
@@ -29,6 +27,9 @@ module.exports = function ChallengeController(){
         });
     }
 
+    //Create challenge from Challenge model and save to DB
+    //ON ERROR - flash error and return to challenge creation
+    //ON SUCCESS - redirect to dashboard
     this.createChallenge = function(req, res, next){
         //Form validation using express-validator
         req.checkBody('name', 'No challenge name entered').notEmpty();
@@ -162,7 +163,8 @@ module.exports = function ChallengeController(){
             {
                 $push: {progress:
                     {
-                        "progressParticipant" : req.user.id,
+                        "progressParticipantId" : req.user.id,
+                        "progressParticipantName" : res.locals.username,
                         "progressDate" : new Date(),
                         "progressAmounts" : req.body.amount,
                         "progressLikes" : 0
@@ -175,7 +177,6 @@ module.exports = function ChallengeController(){
                     res.redirect('/user/dashboard');
                 }
                 else {
-                    console.log("user added progress to " + req.body.challengeId);
                     url = '/challenge/' + req.body.challengeId;
                     res.redirect(url);               
                 }

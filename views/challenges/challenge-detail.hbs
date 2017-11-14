@@ -24,6 +24,10 @@
                     <p>{{participantRole}}</p>
                     <br>
                 {{/each}}
+                {{#each progress}}
+                    {{progressParticipantName}}
+                    {{progressAmounts}}<br>
+                {{/each}}
             {{/with}}
         </div>
         <div class="col-sm-6">

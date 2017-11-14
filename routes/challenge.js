@@ -10,7 +10,7 @@ var challengeController = new ChallengeController();
 var csrfProtection = csrf();
 router.use(csrfProtection);
 
-router.use('/', isLoggedIn, function(req, res, next) {
+router.use('/', isLoggedIn, challengeController.storeCurrentUser, function(req, res, next) {
     next();
 })
 
@@ -26,14 +26,14 @@ router.get('/delete-challenge/:challengeId', function(req, res, next){
     challengeController.deleteChallenge(req, res, next);
 });
 
-router.get('/create-challenge', challengeController.storeCurrentUser, function(req, res, next){
+router.get('/create-challenge', function(req, res, next){
     var messages = req.flash('error');
     res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
 });
 
-router.post('/create-challenge', challengeController.storeCurrentUser, challengeController.createChallenge)
+router.post('/create-challenge', challengeController.createChallenge)
 
-router.get('/discover', challengeController.storeCurrentUser, function(req, res, next){
+router.get('/discover', function(req, res, next){
     var messages = req.flash('error');
     Challenge.find({}).exec(function(err, result){
         if(err){
@@ -50,15 +50,15 @@ router.get('/discover', challengeController.storeCurrentUser, function(req, res,
     
 });
 
-router.post('/add-progress', challengeController.storeCurrentUser, challengeController.addProgress);
+router.post('/add-progress', challengeController.addProgress);
 
-router.get('/add-progress', challengeController.storeCurrentUser, function(req, res, next){
+router.get('/add-progress', function(req, res, next){
     res.redirect('/challenge/discover');
 });
 
-router.get('/join-challenge/:challengeId', challengeController.storeCurrentUser, challengeController.joinChallenge);
+router.get('/join-challenge/:challengeId', challengeController.joinChallenge);
 
-router.get('/:challengeId', challengeController.storeCurrentUser, function(req, res, next){
+router.get('/:challengeId', function(req, res, next){
     Challenge.findOne({"_id": req.params.challengeId}).exec(function(err, result){
         if(err){
             res.redirect('challenge/discover');            

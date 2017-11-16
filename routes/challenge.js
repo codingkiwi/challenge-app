@@ -64,7 +64,38 @@ router.get('/:challengeId', function(req, res, next){
             res.redirect('challenge/discover');            
         }
         else {
-            res.render('challenges/challenge-detail', {message: req.flash('error'), hasErrors: req.flash('errpr').length > 0, challenge: result, csrfToken: req.csrfToken()});
+            //sort progress listings by highest progression amount s
+            result.progress.sort(function(a, b){
+                var keyA = a.progressAmounts,
+                    keyB = b.progressAmounts;
+                if(keyA < keyB) return 1;
+                if(keyA > keyB) return -1;
+                return 0;
+            });
+            //put top 5 unique progress logs in a new array, add rank number and progress remaining
+            //if goal is surpassed, show 0 remaining
+            var progressRankings = [];
+            for(var progressPoint of result.progress){
+                var userAlreadyHasRanking = false;
+                if (progressRankings.length >= 4){
+                    break;
+                }
+                else{
+                    for(var ranking of progressRankings){
+                        if(ranking.progressParticipantName === progressPoint.progressParticipantName){
+                            userAlreadyHasRanking = true;
+                        }
+                    }
+                    if(!userAlreadyHasRanking){             
+                        progressRankings.push(progressPoint);
+                    }
+                }
+            }
+            for(var i = 0; i < progressRankings.length; i++){
+                progressRankings[i].rank = i+1;
+                progressRankings[i].progressRemaining = (result.goalAmount - progressRankings[i].progressAmounts) < 0 ? 0 : (result.goalAmount - progressRankings[i].progressAmounts);
+            }
+            res.render('challenges/challenge-detail', {message: req.flash('error'), hasErrors: req.flash('errpr').length > 0, challenge: result, rankings: progressRankings, csrfToken: req.csrfToken()});
         }
     }); 
 });

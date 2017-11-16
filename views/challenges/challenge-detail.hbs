@@ -29,6 +29,22 @@
                     {{progressAmounts}}<br>
                 {{/each}}
             {{/with}}
+            <table class="table table-condensed">
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Progress</th>
+                    <th>Progress Remaining</th>
+                </tr>
+                {{#each rankings}}
+                <tr>
+                    <th>{{rank}}</th>
+                    <th>{{progressParticipantName}}</th>
+                    <th>{{progressAmounts}}</th>
+                    <th>{{progressRemaining}}</th>
+                </tr>
+                {{/each}}
+            </table>
         </div>
         <div class="col-sm-6">
             <button class="btn btn-primary">Add Progress</button>

@@ -1,15 +1,15 @@
 <div class="container">
+    {{#if hasErrors}}
+        <div class="alert alert-danger">
+            {{#each messages }}
+                <p>{{ this }}</p>
+            {{/each}}
+        </div> 
+    {{/if}}
     <div class="row">
         <div class="col-sm-6">
             {{#with challenge}}
                 <h3>Challenge Detail</h3>
-                {{#if hasErrors}}
-                    <div class="alert alert-danger">
-                        {{#each messages }}
-                            <p>{{ this }}</p>
-                        {{/each}}
-                    </div> 
-                {{/if}}
                 <h1>{{name}}</h1>
                 <p>{{description}}</p>
                 <p>{{startDate}}</p>
@@ -32,7 +32,7 @@
             <table class="table table-condensed">
                 <tr>
                     <th>Rank</th>
-                    <th>Name</th>
+                    <th>Participant</th>
                     <th>Progress</th>
                     <th>Progress Remaining</th>
                 </tr>
@@ -45,13 +45,29 @@
                 </tr>
                 {{/each}}
             </table>
+            <table class="table table-condensed">
+                <tr>
+                    <th>Date</th>
+                    <th>Participant</th>
+                    <th>Progress</th>
+                    <th></th>
+                </tr>
+                {{#each progress}}
+                <tr>
+                    <th>{{progressDate}}</th>
+                    <th>{{progressParticipantName}}</th>
+                    <th>{{progressAmounts}}</th>
+                    <th><a href="/challenge/remove-progress/{{../challenge.id}}/{{this.id}}">Remove</a></th>
+                </tr>
+                {{/each}}
+            </table>
         </div>
         <div class="col-sm-6">
             <button class="btn btn-primary">Add Progress</button>
             <form action="/challenge/add-progress" method="post">
                 <div class="form-group">
                     <label for="amount"></label>
-                    <input type="number" id="amount" name="amount" class="form-control">
+                    <input type="number" id="amount" name="amount" class="form-control" min="0">
                 </div>
                 <input type="hidden" name="challengeId" value="{{challenge.id}}">
                 <input type="hidden" name="_csrf" value="{{csrfToken}}">

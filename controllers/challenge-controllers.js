@@ -100,6 +100,7 @@ module.exports = function ChallengeController(){
                         if(keyA > keyB) return -1;
                         return 0;
                     });
+
                     //put top 5 unique progress logs in a new array, add rank number and progress remaining
                     //if goal is surpassed, show 0 remaining
                     var progressRankings = [];
@@ -123,7 +124,15 @@ module.exports = function ChallengeController(){
                         progressRankings[i].rank = i+1;
                         progressRankings[i].progressRemaining = (result.goalAmount - progressRankings[i].progressAmounts) < 0 ? 0 : (result.goalAmount - progressRankings[i].progressAmounts);
                     }
-                    res.render('challenges/challenge-detail', {message: req.flash('error'), hasErrors: req.flash('errpr').length > 0, challenge: result, rankings: progressRankings, csrfToken: req.csrfToken()});
+
+                    var userProgress = [];
+                    for(var progressPoint of result.progress){
+                        if(progressPoint.progressParticipantId.equals(req.user.id)){
+                            userProgress.push(progressPoint);
+                        }
+                    }
+
+                    res.render('challenges/challenge-detail', {message: req.flash('error'), hasErrors: req.flash('errpr').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, csrfToken: req.csrfToken()});
                 }
             }
         }); 
@@ -249,5 +258,29 @@ module.exports = function ChallengeController(){
         }
 
     }
+
+    this.removeProgress = function(req, res, next){
+        Challenge.update({
+            "_id" : req.params.challengeId
+            },
+            {
+                $pull: {progress:
+                    {
+                        "_id" : req.params.progressId
+                    }
+                }
+            },
+            function(err, result){
+                if(err){
+                    console.log(err);
+                    url = '/challenge/' + req.params.challengeId
+                    res.redirect(url)
+                }
+                else {
+                    url = '/challenge/' + req.params.challengeId
+                    res.redirect(url)
+                }
+            }
+        )}
 };
 

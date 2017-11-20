@@ -81,6 +81,54 @@ module.exports = function ChallengeController(){
         }
     }
 
+    //retrieve challenge details and relevant participant information
+    this.getChallengeDetails = function(req, res, next){
+        Challenge.findOne({"_id": req.params.challengeId}).exec(function(err, result){
+            if(err){
+                res.redirect('/challenge/discover');            
+            }
+            else {
+                if(!result){
+                    res.redirect('/challenge/discover'); 
+                }
+                else{
+                    //sort progress listings by highest progression amount s
+                    result.progress.sort(function(a, b){
+                        var keyA = a.progressAmounts,
+                            keyB = b.progressAmounts;
+                        if(keyA < keyB) return 1;
+                        if(keyA > keyB) return -1;
+                        return 0;
+                    });
+                    //put top 5 unique progress logs in a new array, add rank number and progress remaining
+                    //if goal is surpassed, show 0 remaining
+                    var progressRankings = [];
+                    for(var progressPoint of result.progress){
+                        var userAlreadyHasRanking = false;
+                        if (progressRankings.length >= 5){
+                            break;
+                        }
+                        else{
+                            for(var ranking of progressRankings){
+                                if(ranking.progressParticipantId.equals(progressPoint.progressParticipantId)){
+                                    userAlreadyHasRanking = true;
+                                }
+                            }
+                            if(!userAlreadyHasRanking){             
+                                progressRankings.push(progressPoint);
+                            }
+                        }
+                    }
+                    for(var i = 0; i < progressRankings.length; i++){
+                        progressRankings[i].rank = i+1;
+                        progressRankings[i].progressRemaining = (result.goalAmount - progressRankings[i].progressAmounts) < 0 ? 0 : (result.goalAmount - progressRankings[i].progressAmounts);
+                    }
+                    res.render('challenges/challenge-detail', {message: req.flash('error'), hasErrors: req.flash('errpr').length > 0, challenge: result, rankings: progressRankings, csrfToken: req.csrfToken()});
+                }
+            }
+        }); 
+    }
+
     this.deleteChallenge = function(req, res, next){
         Challenge.findOneAndRemove({"_id" : req.params.challengeId, "participants" : {
             $elemMatch : {participantID : req.user.id, participantRole : "admin"}
@@ -99,6 +147,23 @@ module.exports = function ChallengeController(){
                 res.redirect('/user/dashboard');
             }
         })
+    }
+
+    this.getDiscoveryChallenges = function(req, res, next){
+        var messages = req.flash('error');
+        Challenge.find({}).exec(function(err, result){
+            if(err){
+                req.flash('error', 'Error retrieving challenges from database'); 
+                res.render('challenges/discover', {challenges: {}, messages: messages});
+            }
+            var challengeChunk = [];
+            var chunkSize = 3;
+            for (var i = 0; i < result.length; i += chunkSize) {
+                challengeChunk.push(result.slice(i, i + chunkSize));
+            }
+            res.render('challenges/discover', {challenges: challengeChunk, messages: messages});
+        });
+        
     }
 
     this.removeFromChallenge = function(req, res, next){

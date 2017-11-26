@@ -23,7 +23,8 @@ h3 {
 }
 
 #main-container{
-  padding-top: 50px
+  padding-top: 50px;
+  padding-bottom: 200px;
 }
 
 .header-underline{
@@ -93,6 +94,11 @@ h3 {
 
 }
 
+/* footer styles */
+#footer{
+  height: 200px;
+  background-color: #4A4A4A;
+}
 
 @media (max-width: 767px) {
   #main-container{

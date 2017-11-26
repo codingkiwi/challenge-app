@@ -9,11 +9,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-left" href="/"><img src="/images/challengify-logo-white.png" height="50" alt="challengify logo"></a>
+      <a class="navbar-left" href="/"><img id="brand-logo" src="/images/challengify-logo-white.png" height="75" alt="challengify logo"></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><div id="navbar-just-links">
       <ul class="nav navbar-nav">
         {{#if login}}
           <li class="active"><a href="/user/dashboard">Dashboard<span class="sr-only">(current)</span></a></li>
@@ -49,6 +49,6 @@
           {{/if}}
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
+    </div><!-- /.navbar-collapse --></div>
   </div><!-- /.container-fluid -->
 </nav>

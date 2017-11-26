@@ -1,27 +1,74 @@
 /* https://color.adobe.com/create/color-wheel/?base=2&rule=Monochromatic&selected=3&name=My%20Color%20Theme&mode=rgb&rgbvalues=0.1337923674817531,0.4264312031450381,0.5,0.545091855682451,0.908611831416982,1,0.2675847349635062,0.8528624062900761,1,0.20531877066100646,0.44080040508950713,0.5,0.21406778797080497,0.682289925032061,0.8&swatchOrder=0,1,2,3,4 */
 
 body {
-  font: 14px 'Nunito', sans-serif;
-}
-
-h1, h2, h3, h4 {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
 }
 
 a {
-  color: #37AECC;
+  color: #BB6BD9;
 
 }
 
 a:hover{
-  color: #34707F;
+  color: #7B26C9;
 }
 
 
-h1 {
-  margin-bottom: 20px;
+h1, h2, h3 {
+  font-weight: 700;
 }
 
+h3 { 
+  font-size: 18px;
+}
+
+#main-container{
+  padding-top: 50px
+}
+
+.header-underline{
+  margin-top: 0px;
+  margin-bottom: 15px;
+}
+
+/* challenge detail page styles */
+#challenge-detail-links{
+  margin-bottom: 10px;
+}
+
+#challenge-detail-links a{
+  padding-right: 10px;
+}
+
+#add-progress-container {
+  margin-bottom: 40px
+}
+
+#add-progress-form {
+  display: none;
+}
+
+#challenge-detail-block{
+  margin-bottom: 40px;
+}
+
+.x-remove-link {
+  color: #EB5757
+}
+
+.x-remove-link:hover {
+  color: #B54545
+}
+
+.x-remove-link:active {
+  color: #B54545
+}
+
+.x-remove-link:focus {
+  color: #B54545
+}
+
+/* form and buttom styling */
 .form-control:focus{
   border-color: #00B3BB; 
   box-shadow: 0 0 8px #34707F; 
@@ -29,18 +76,29 @@ h1 {
   box-shadow: 0 0 8px #34707F;
 } 
 .btn, .btn-primary {
-  background-color: #FF7600;
-  border-color: rgb(207, 96, 4);
+  background-color: #9131EB;
+  border: 0;
+  border-radius: 0;
 }
 .btn:active, .btn-primary:active {
-  background-color:rgb(199, 88, 3);
-  background-color:rgb(161, 73, 5);
+  background-color: #7B26C9;
+
 }
 .btn:hover, .btn-primary:hover {
-  background-color:rgb(199, 88, 3);
-  background-color:rgb(161, 73, 5);
+  background-color: #7B26C9;
+
 }
 .btn:focus, .btn-primary:focus {
-  background-color:rgb(199, 88, 3);
-  background-color:rgb(161, 73, 5);
+  background-color: #7B26C9;
+
 }
+
+
+@media (max-width: 767px) {
+  #main-container{
+    padding-top: 0px
+  }
+}
+
+
+

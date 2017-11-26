@@ -132,7 +132,7 @@ module.exports = function ChallengeController(){
                         }
                     }
 
-                    res.render('challenges/challenge-detail', {message: req.flash('error'), hasErrors: req.flash('errpr').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, csrfToken: req.csrfToken()});
+                    res.render('challenges/challenge-detail', {userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('errpr').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, csrfToken: req.csrfToken()});
                 }
             }
         }); 

@@ -6,11 +6,13 @@
             {{/each}}
         </div> 
     {{/if}}
-    <div class="row">
+        <div class="row">
         <div class="col-sm-6">
             {{#with challenge}}
                 <h3>Challenge Detail</h3>
                 <h1>{{name}}</h1>
+                <a href="/challenge/remove-from-challenge/{{../userId}}/{{id}}">leave challenge</a>
+                <a href="/challenge/join-challenge/{{id}}">Join Challenge</a>
                 <p>{{description}}</p>
                 <p>{{startDate}}</p>
                 <p>{{endDate}}</p>

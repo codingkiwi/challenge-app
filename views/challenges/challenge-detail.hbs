@@ -7,7 +7,7 @@
         </div> 
     {{/if}}
         <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-5 col-md-offset-1">
             {{#with challenge}}
                 <h1>{{name}}</h1>
                 <hr class="header-underline">
@@ -49,8 +49,9 @@
                     {{progressAmounts}}<br>
                 {{/each}} --}}
             {{/with}}
+            <h3>Top 5</h3>
             <table class="table table-condensed">
-                <tr>
+                <tr id="challenge-detail-table-header">
                     <th>Rank</th>
                     <th>Participant</th>
                     <th>Progress</th>
@@ -58,28 +59,29 @@
                 </tr>
                 {{#each rankings}}
                 <tr>
-                    <th>{{rank}}</th>
-                    <th>{{progressParticipantName}}</th>
-                    <th>{{progressAmounts}}</th>
-                    <th>{{progressRemaining}}</th>
+                    <td>{{rank}}</td>
+                    <td>{{progressParticipantName}}</td>
+                    <td>{{progressAmounts}}</td>
+                    <td>{{progressRemaining}}</td>
                 </tr>
                 {{/each}}
             </table>
         </div>
-        <div class="col-sm-6">
+        <div class="col-md-5">
+            <h3>Your Progress</h3>
             <table class="table table-condensed">
-                <tr>
+                <tr id="challenge-detail-table-header">
                     <th>Date</th>
                     <th>Participant</th>
                     <th>Progress</th>
-                    <th></th>
+                    <th>Remove</th>
                 </tr>
                 {{#each progress}}
                 <tr>
-                    <th>{{progressDate}}</th>
-                    <th>{{progressParticipantName}}</th>
-                    <th>{{progressAmounts}}</th>
-                    <th><a class="x-remove-link" href="/challenge/remove-progress/{{../challenge.id}}/{{this.id}}">&#10006</a></th>
+                    <td>{{progressDate}}</td>
+                    <td>{{progressParticipantName}}</td>
+                    <td>{{progressAmounts}}</td>
+                    <td><a class="x-remove-link" href="/challenge/remove-progress/{{../challenge.id}}/{{this.id}}">&#10006</a></td>
                 </tr>
                 {{/each}}
             </table>

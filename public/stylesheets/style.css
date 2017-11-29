@@ -2,6 +2,7 @@
 
 body {
   font-family: 'Nunito Sans', sans-serif;
+  color: #4f4f4f;
 }
 
 a {
@@ -67,6 +68,14 @@ h3 {
 
 .x-remove-link:focus {
   color: #B54545
+}
+
+#challenge-detail-table-header {
+  background-color: #E4D5F2;
+}
+
+table {
+  font-size: 12px;
 }
 
 /* form and buttom styling */

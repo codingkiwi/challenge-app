@@ -83,6 +83,7 @@ module.exports = function ChallengeController(){
 
     //retrieve challenge details and relevant participant information
     this.getChallengeDetails = function(req, res, next){
+
         Challenge.findOne({"_id": req.params.challengeId}).exec(function(err, result){
             if(err){
                 res.redirect('/challenge/discover');            
@@ -131,8 +132,7 @@ module.exports = function ChallengeController(){
                             userProgress.push(progressPoint);
                         }
                     }
-
-                    res.render('challenges/challenge-detail', {csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress});
+                    res.render('challenges/challenge-detail', {challengeJoined: "Already Joined?", participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress});
                 }
             }
         }); 
@@ -282,6 +282,24 @@ module.exports = function ChallengeController(){
                     res.redirect(url)
                 }
             }
-        )}
+        )
+    }
+
+    function checkIfAlreadyJoined(req, res){
+        Challenge.findOne({"_id": req.params.challengeId, "participants": {$elemMatch : {participantID : req.user.id}}},function(err, result){
+            if(err){
+                console.log(err);
+                return false;
+            }
+            else if(!result){
+                console.log("user not joined");
+                return false;
+            }
+            else{
+                console.log("user has joined");
+                return true;
+            }
+        });
+    }
 };
 

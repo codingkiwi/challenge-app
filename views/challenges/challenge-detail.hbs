@@ -14,6 +14,19 @@
                 <div id="challenge-detail-links">
                     <a href="/challenge/remove-from-challenge/{{../userId}}/{{id}}">leave challenge</a>
                     <a href="/challenge/join-challenge/{{id}}">Join Challenge</a>
+                    <p>Participants: <a href="#">{{../participantNumber}}</a></p>
+                    <p>Status: {{../challengeJoined}}</p>
+
+                            {{!-- {{#each participants}}
+                                {{#if participantUsername}}
+                                    <a href="#">{{participantUsername}}</a>
+                                {{/if}}
+                                <p>{{participantRole}}</p>
+                            {{/each}}
+                            {{#each progress}}
+                                {{progressParticipantName}}
+                                {{progressAmounts}}<br>
+                            {{/each}} --}}
                 </div>
                 <div id="add-progress-container">
                     <button class="btn btn-primary" id="add-progress-button">Add Progress</button>
@@ -36,18 +49,6 @@
                     <p>{{goalType}}</p>
                     <p>{{goalAmount}}</p>
                 </div>
-                {{!-- <h2>Participants</h2>
-                {{#each participants}}
-                    {{#if participantUsername}}
-                        <a href="#">{{participantUsername}}</a>
-                    {{/if}}
-                    <p>{{participantRole}}</p>
-                    <br>
-                {{/each}}
-                {{#each progress}}
-                    {{progressParticipantName}}
-                    {{progressAmounts}}<br>
-                {{/each}} --}}
             {{/with}}
             <h3>Top 5</h3>
             <table class="table table-condensed">

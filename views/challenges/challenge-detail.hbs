@@ -16,14 +16,14 @@
                     <a href="/challenge/join-challenge/{{id}}">Join Challenge</a>
                 </div>
                 <div id="add-progress-container">
-                    <button class="btn btn-primary">Add Progress</button>
+                    <button class="btn btn-primary" id="add-progress-button">Add Progress</button>
                     <form id="add-progress-form" action="/challenge/add-progress" method="post">
                         <div class="form-group">
                             <label for="amount"></label>
                             <input type="number" id="amount" name="amount" class="form-control" min="0">
                         </div>
-                        <input type="hidden" name="challengeId" value="{{challenge.id}}">
-                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <input type="hidden" name="challengeId" value="{{id}}">
+                        <input type="hidden" name="_csrf" value="{{../csrfToken}}">
                         <button type="submit" class="btn btn-primary">Submit Progress</button>
                     </form>
                 </div>
@@ -94,3 +94,5 @@ scripts to use if charts are needed
 <script src="/scripts/frappe-charts.min.iife.js"></script>
 <script src="/scripts/progress-chart.js"></script>
 -->
+<!-- scripts for button, dropdown, and generic page controls -->
+<script src="/scripts/challenge-detail-pagecontrols.js"></script>

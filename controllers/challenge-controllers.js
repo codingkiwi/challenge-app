@@ -132,7 +132,7 @@ module.exports = function ChallengeController(){
                         }
                     }
 
-                    res.render('challenges/challenge-detail', {userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('errpr').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, csrfToken: req.csrfToken()});
+                    res.render('challenges/challenge-detail', {csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress});
                 }
             }
         }); 
@@ -220,6 +220,7 @@ module.exports = function ChallengeController(){
     }
 
     this.addProgress = function(req, res, next){
+        console.log('here');
         req.checkBody('amount', 'Not a valid amount').notEmpty();
         var errors = req.validationErrors();
         if(errors){

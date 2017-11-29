@@ -31,11 +31,12 @@ router.get('/create-challenge', function(req, res, next){
     res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
 });
 
+router.post('/add-progress', challengeController.addProgress);
+
 router.post('/create-challenge', challengeController.createChallenge)
 
 router.get('/discover', challengeController.getDiscoveryChallenges);
 
-router.post('/add-progress', challengeController.addProgress);
 
 router.get('/add-progress', function(req, res, next){
     res.redirect('/challenge/discover');

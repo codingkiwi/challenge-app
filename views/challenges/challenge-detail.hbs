@@ -12,15 +12,14 @@
                 <h1>{{name}}</h1>
                 <hr class="header-underline">
                 <div id="challenge-detail-links">
-                    <a href="/challenge/remove-from-challenge/{{../userId}}/{{id}}">leave challenge</a>
-                    <a href="/challenge/join-challenge/{{id}}">Join Challenge</a>
-                    <p>Participants: <a href="#">{{../participantNumber}}</a></p>
+                    Participants: <a href="#">{{../participantNumber}}</a>
                     {{#if ../challengeJoined}}
-                    <p>Status: Joined</p>
+                        <a href="/challenge/remove-from-challenge/{{../userId}}/{{id}}">leave challenge</a>
+                        <p>Status: Joined as {{../challengeRole}}</p>
                     {{else}}
-                    <p>Status: Not Joined</p>
+                        <a href="/challenge/join-challenge/{{id}}">Join Challenge</a>
+                        <p>Status: Not Joined</p>
                     {{/if}}
-                    {{../challengeJoined}}
                             {{!-- {{#each participants}}
                                 {{#if participantUsername}}
                                     <a href="#">{{participantUsername}}</a>

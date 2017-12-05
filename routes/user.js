@@ -30,9 +30,13 @@ router.get('/dashboard', isLoggedIn, function(req, res, next){
     });
 });
 
-router.get('/profile', isLoggedIn, storeCurrentUser, function(req, res, next) {
-    var messages = req.flash('error');
+router.get('/profile/:userId', isLoggedIn, findUserProfile, function(req, res, next) {
     res.render('user/profile', {messages: {}, hasErrors: false});
+});
+
+router.get('/profile', isLoggedIn, function(req, res, next){
+    var redirectUrl = "profile/" + req.user.id;
+    res.redirect(redirectUrl);
 });
 
 router.use('/', notLoggedIn, function(req, res, next) {
@@ -105,3 +109,4 @@ function storeCurrentUser(req, res, next){
         next();
     });
 }
+

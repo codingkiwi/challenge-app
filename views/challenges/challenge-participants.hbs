@@ -1,9 +1,15 @@
 <div class="container">
     <div class="row">
+        <h1>{{challengeName}}</h1>
+        <h3>Challenge Participants</h3>
+        <a href="/challenge/{{challengeId}}">Back To Challenge</a>
+        <br>
+        <br>
+    </div>
+    <div class="row">
         <div class="col-md-8">
-            <p>{{participants}}</p>
             <table class="table">
-                <tr>
+                <tr id="challenge-detail-table-header">
                     <th>Participant Username</th>
                     <th>Role</th>
                 </tr>

@@ -159,7 +159,7 @@ module.exports = function ChallengeController(){
                     res.redirect('/challenge/discover'); 
                 }
                 else{
-                    res.render('challenges/challenge-participants', {participants: result.participants})
+                    res.render('challenges/challenge-participants', {participants: result.participants, challengeName: result.name, challengeId: result._id});
                 }
             }
         });        

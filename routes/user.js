@@ -92,8 +92,8 @@ function notLoggedIn(req, res, next){
     res.redirect('/');
 }
 
-function storeCurrentUser(req, res, next){
-    User.findOne({"_id" : req.user.id}, function(err, result){
+function findUserProfile(req, res, next){
+    User.findOne({"_id" : req.params.userId}, function(err, result){
         if(err){
             res.locals.username = "Not Logged In";
             res.locals.userFull = "Not Logged In"
@@ -109,4 +109,3 @@ function storeCurrentUser(req, res, next){
         next();
     });
 }
-

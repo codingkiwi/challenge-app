@@ -93,7 +93,7 @@ module.exports = function ChallengeController(){
                     res.redirect('/challenge/discover'); 
                 }
                 else{
-                    //sort progress listings by highest progression amount s
+                    //sort progress listings by highest progression amount
                     result.progress.sort(function(a, b){
                         var keyA = a.progressAmounts,
                             keyB = b.progressAmounts;
@@ -132,7 +132,16 @@ module.exports = function ChallengeController(){
                             userProgress.push(progressPoint);
                         }
                     }
-                    res.render('challenges/challenge-detail', {challengeJoined: "Already Joined?", participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress});
+ 
+                    //check if user is already participating in challenge
+                    var challengeAlreadyJoined = false; 
+
+                    for(var participant of result.participants){
+                        if(participant.participantID == req.user.id){
+                            challengeAlreadyJoined = true;
+                        }
+                    }
+                    res.render('challenges/challenge-detail', {challengeJoined: challengeAlreadyJoined, participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress});
                 }
             }
         }); 
@@ -283,23 +292,6 @@ module.exports = function ChallengeController(){
                 }
             }
         )
-    }
-
-    function checkIfAlreadyJoined(req, res){
-        Challenge.findOne({"_id": req.params.challengeId, "participants": {$elemMatch : {participantID : req.user.id}}},function(err, result){
-            if(err){
-                console.log(err);
-                return false;
-            }
-            else if(!result){
-                console.log("user not joined");
-                return false;
-            }
-            else{
-                console.log("user has joined");
-                return true;
-            }
-        });
     }
 };
 

@@ -15,8 +15,12 @@
                     <a href="/challenge/remove-from-challenge/{{../userId}}/{{id}}">leave challenge</a>
                     <a href="/challenge/join-challenge/{{id}}">Join Challenge</a>
                     <p>Participants: <a href="#">{{../participantNumber}}</a></p>
-                    <p>Status: {{../challengeJoined}}</p>
-
+                    {{#if ../challengeJoined}}
+                    <p>Status: Joined</p>
+                    {{else}}
+                    <p>Status: Not Joined</p>
+                    {{/if}}
+                    {{../challengeJoined}}
                             {{!-- {{#each participants}}
                                 {{#if participantUsername}}
                                     <a href="#">{{participantUsername}}</a>

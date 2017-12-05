@@ -149,6 +149,22 @@ module.exports = function ChallengeController(){
         }); 
     }
 
+    this.getChallengeParticipants = function(req, res, next){
+        Challenge.findOne({"_id": req.params.challengeId}).exec(function(err, result){
+            if(err){
+                res.redirect('/challenge/discover');            
+            }
+            else {
+                if(!result){
+                    res.redirect('/challenge/discover'); 
+                }
+                else{
+                    res.render('challenges/challenge-participants', {participants: result.participants})
+                }
+            }
+        });        
+    }
+
     this.deleteChallenge = function(req, res, next){
         Challenge.findOneAndRemove({"_id" : req.params.challengeId, "participants" : {
             $elemMatch : {participantID : req.user.id, participantRole : "admin"}

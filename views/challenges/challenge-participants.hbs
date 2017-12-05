@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <p>{{participants}}</p>
+            <table class="table">
+                <tr>
+                    <th>Participant Username</th>
+                    <th>Role</th>
+                </tr>
+                {{#each participants}}
+                    <tr>
+                        <td><a href="#">{{participantUsername}}</a></td>
+                        <td>{{participantRole}}</td>
+                    </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>
+</div>

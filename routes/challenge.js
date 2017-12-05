@@ -48,6 +48,8 @@ router.get('/:challengeId', challengeController.getChallengeDetails);
 
 router.get('/remove-progress/:challengeId/:progressId', challengeController.removeProgress);
 
+router.get('/:challengeId/participants', challengeController.getChallengeParticipants);
+
 module.exports = router;
 
 function isLoggedIn(req, res, next){

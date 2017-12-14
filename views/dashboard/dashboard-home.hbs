@@ -1,5 +1,8 @@
 <div class="container">
-    <h1>Dashboard</h1>
+    <div id="dashboard-header-row">   
+        <h1>Dashboard</h1>
+        <a id="create-challenge-link" href="/challenge/create-challenge">Create Challenge</a>
+    </div>
     {{#if hasErrors}}
         <div class="alert alert-danger">
             {{#each messages}}
@@ -7,16 +10,24 @@
             {{/each}}
         </div> 
     {{/if}}
-    <a href="/challenge/create-challenge">Create Challenge</a>
     <div class="challenge-list">
         {{#each challenges}}
             <div class="row">
                 {{#each this}}
-                    <div class="col-sm-6 col-md-4"> 
-                        <h3><a href="/challenge/{{this.id}}">{{this.name}}</a></h3>
-                        <p>{{this.description}}</p>
-                        <a href="/challenge/delete-challenge/{{this.id}}">Delete Challenge</a>
-                        <a href="/challenge/remove-from-challenge/{{../userId}}/{{this.id}}">Quit Challenge</a>
+                    <div class="col-sm-6 col-md-4 col-lg-3"> 
+                        <div class="dashboard-challenge-card">
+                            {{!-- <img src="/images/Challengify_DashboardChallengePlaceholder.png" height="180" width="250"> --}}
+                            <img src="/images/coding.png">
+                            <div class="dashboard-challenge-card-text">
+                                <h3><a href="/challenge/{{this.id}}">{{this.name}}</a></h3>
+                                <hr>
+                                {{!-- <p>{{this.description}}</p> --}}
+                                <p>Start Date:{{this.startDate}}</p>
+                                <p>End Date: {{this.endDate}}</p>
+                                <a href="/challenge/delete-challenge/{{this.id}}">Delete Challenge</a>
+                                <a href="/challenge/remove-from-challenge/{{../userId}}/{{this.id}}">Quit Challenge</a>
+                            </div>
+                        </div>
                     </div>
                 {{/each}}
             </div>

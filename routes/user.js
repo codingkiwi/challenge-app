@@ -21,7 +21,7 @@ router.get('/dashboard', isLoggedIn, function(req, res, next){
             res.render('dashboard/dashboard-home', {userId: req.user.id, challenges: {}, csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0}); 
         }
         var challengeChunk = [];
-        var chunkSize = 3;
+        var chunkSize = 4;
         for (var i = 0; i < result.length; i += chunkSize) {
         challengeChunk.push(result.slice(i, i + chunkSize));
     }

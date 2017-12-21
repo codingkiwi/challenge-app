@@ -1,1 +1,1 @@
-web: node --debug=5858 bin/www.js
+web: node --debug=5858 bin/www

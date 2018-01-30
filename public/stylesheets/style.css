@@ -1,5 +1,10 @@
 /* https://color.adobe.com/create/color-wheel/?base=2&rule=Monochromatic&selected=3&name=My%20Color%20Theme&mode=rgb&rgbvalues=0.1337923674817531,0.4264312031450381,0.5,0.545091855682451,0.908611831416982,1,0.2675847349635062,0.8528624062900761,1,0.20531877066100646,0.44080040508950713,0.5,0.21406778797080497,0.682289925032061,0.8&swatchOrder=0,1,2,3,4 */
 
+@font-face {
+  font-family: 'Krinkes';
+  src: url('/fonts/KrinkesRegularPERSONAL.ttf'); 
+}
+
 body {
   font-family: 'Nunito Sans', sans-serif;
   color: #4f4f4f;
@@ -124,6 +129,60 @@ table {
 
 h1 {
   display: inline;
+}
+
+/* Homepage styling */
+#homepage-body{
+  background: url("/images/background-bikes-dark.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: #4F4F4F;
+  margin-top: -70px;
+  margin-right: -15px;
+  margin-left: -15px;
+  height:954px;
+}
+
+#homepage-title{
+  font-family: 'Krinkes', 'Nunito Sans', sans-serif;
+  font-size: 80px;
+  text-align: center;
+  margin-top: 135px;
+  color: #F2F2F2;
+  line-height: 80%;
+}
+
+#homepage-subtitle{
+  font-size: 25px;
+  text-align: center;
+  color: #F2F2F2;
+}
+
+#homepage-button{
+  width: 150px;
+  height: 50px;
+  display: block;
+  margin: 30px auto;
+  font-size: 18px;
+}
+#homepage-button.btn, #homepage-button.btn-primary {
+  background-color: #AA68E8;
+  border: 0;
+  border-radius: 0;
+}
+#homepage-button.btn:active, #homepage-button.btn-primary:active {
+  background-color: #7B26C9;
+
+}
+#homepage-button.btn:hover, #homepage-button.btn-primary:hover {
+  background-color: #7B26C9;
+
+}
+#homepage-button.btn:focus, #homepage-button.btn-primary:focus {
+  background-color: #7B26C9;
+
 }
 
 /* form and buttom styling */

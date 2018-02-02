@@ -137,6 +137,9 @@ h1 {
   text-align: center;
   padding: 50px;
   border-radius: 15px;
+  color: #8A8A8A;
+  font-weight: 700;
+  line-height: 250%; 
 }
 
 /* Homepage styling */

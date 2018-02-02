@@ -143,7 +143,7 @@ module.exports = function ChallengeController(){
                             challengeRole = participant.participantRole;
                         }
                     }
-                    res.render('challenges/challenge-detail', {challengeRole: challengeRole, challengeJoined: challengeAlreadyJoined, participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress});
+                    res.render('challenges/challenge-detail', {challengeRole: challengeRole, challengeJoined: challengeAlreadyJoined, participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, hasRankings: progressRankings.length > 0, hasProgress: userProgress.length > 0});
                 }
             }
         }); 

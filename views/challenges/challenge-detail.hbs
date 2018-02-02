@@ -46,11 +46,11 @@
                 <div id="challenge-detail-block">
                     <h3>Challenge Details</h3>
                     <hr class="header-underline">
-                    <p>{{description}}</p>
-                    <p>{{startDate}}</p>
-                    <p>{{endDate}}</p>
-                    <p>{{goalType}}</p>
-                    <p>{{goalAmount}}</p>
+                    <p><strong>Description:</strong> {{description}}</p>
+                    <p><strong>Start Date:</strong> {{startDate}}</p>
+                    <p><strong>End Date:</strong> {{endDate}}</p>
+                    <p><strong>Goal Type:</strong> {{goalType}}</p>
+                    <p><strong>Goal Amount:</strong> {{goalAmount}}</p>
                 </div>
             {{/with}}
             <h3>Top 5</h3>
@@ -61,15 +61,20 @@
                     <th>Progress</th>
                     <th>Progress Remaining</th>
                 </tr>
-                {{#each rankings}}
-                <tr>
-                    <td>{{rank}}</td>
-                    <td>{{progressParticipantName}}</td>
-                    <td>{{progressAmounts}}</td>
-                    <td>{{progressRemaining}}</td>
-                </tr>
-                {{/each}}
+                {{#if hasRankings}}
+                    {{#each rankings}}
+                        <tr>
+                            <td>{{rank}}</td>
+                            <td><a href="/user/profile/{{progressParticipantId}}">{{progressParticipantName}}</a></td>
+                            <td>{{progressAmounts}}</td>
+                            <td>{{progressRemaining}}</td>
+                        </tr>
+                    {{/each}}
             </table>
+                {{else}}
+            </table>
+                <p>No one has logged any progress yet</p>
+                {{/if}}
         </div>
         <div class="col-md-5">
             <h3>Your Progress</h3>
@@ -80,15 +85,20 @@
                     <th>Progress</th>
                     <th>Remove</th>
                 </tr>
-                {{#each progress}}
-                <tr>
-                    <td>{{progressDate}}</td>
-                    <td>{{progressParticipantName}}</td>
-                    <td>{{progressAmounts}}</td>
-                    <td><a class="x-remove-link" href="/challenge/remove-progress/{{../challenge.id}}/{{this.id}}">&#10006</a></td>
-                </tr>
-                {{/each}}
+                {{#if hasProgress}}
+                    {{#each progress}}
+                    <tr>
+                        <td>{{progressDate}}</td>
+                        <td>{{progressParticipantName}}</td>
+                        <td>{{progressAmounts}}</td>
+                        <td><a class="x-remove-link" href="/challenge/remove-progress/{{../challenge.id}}/{{this.id}}">&#10006</a></td>
+                    </tr>
+                    {{/each}}
             </table>
+                {{else}}
+            </table>
+                <p>You have no progress logged</p>
+                {{/if}}
         </div>
         <div id="chart"></div>
     </div>  

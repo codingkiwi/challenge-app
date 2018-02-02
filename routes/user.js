@@ -78,7 +78,6 @@ function isLoggedIn(req, res, next){
                 res.locals.username = "error retrieving username";
             }
             res.locals.username = result.username;
-            console.log('ping');
         });
         return next();
     }
@@ -87,6 +86,18 @@ function isLoggedIn(req, res, next){
 
 function notLoggedIn(req, res, next){
     if (!req.isAuthenticated()) {
+        return next();
+    }
+    else if (req.isAuthenticated()) {
+        User.findOne({"_id" : req.user.id}, function(err, result){
+            if(err){
+                res.locals.username = "error retrieving username";
+            }
+            if(!result){
+                res.locals.username = "error retrieving username";
+            }
+            res.locals.username = result.username;
+        });
         return next();
     }
     res.redirect('/');

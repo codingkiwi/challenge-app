@@ -1,6 +1,6 @@
 <div class="container">
     <div id="dashboard-header-row">   
-        <h1>Dashboard</h1>
+        <h1>My Challenges</h1>
         <a id="create-challenge-link" href="/challenge/create-challenge">Create Challenge</a>
     </div>
     {{#if hasErrors}}
@@ -11,27 +11,36 @@
         </div> 
     {{/if}}
     <div class="challenge-list">
-        {{#each challenges}}
-            <div class="row">
-                {{#each this}}
-                    <div class="col-sm-6 col-md-4 col-lg-3"> 
-                        <div class="dashboard-challenge-card">
-                            {{!-- <img src="/images/Challengify_DashboardChallengePlaceholder.png" height="180" width="250"> --}}
-                            <img src="/images/coding.png">
-                            <div class="dashboard-challenge-card-text">
-                                <h3><a href="/challenge/{{this.id}}">{{this.name}}</a></h3>
-                                <hr>
-                                {{!-- <p>{{this.description}}</p> --}}
-                                <p>Start Date:{{this.startDate}}</p>
-                                <p>End Date: {{this.endDate}}</p>
-                                <a href="/challenge/delete-challenge/{{this.id}}">Delete Challenge</a>
-                                <a href="/challenge/remove-from-challenge/{{../../userId}}/{{this.id}}">Quit Challenge</a>
+        {{#if hasChallenges}}
+            {{#each challenges}}
+                <div class="row">
+                    {{#each this}}
+                        <div class="col-sm-6 col-md-4 col-lg-3"> 
+                            <div class="dashboard-challenge-card">
+                                {{!-- <img src="/images/Challengify_DashboardChallengePlaceholder.png" height="180" width="250"> --}}
+                                <img src="/images/coding.png">
+                                <div class="dashboard-challenge-card-text">
+                                    <h3><a href="/challenge/{{this.id}}">{{this.name}}</a></h3>
+                                    <hr>
+                                    {{!-- <p>{{this.description}}</p> --}}
+                                    <p>Start Date:{{this.startDate}}</p>
+                                    <p>End Date: {{this.endDate}}</p>
+                                    <a href="/challenge/delete-challenge/{{this.id}}">Delete Challenge</a>
+                                    <a href="/challenge/remove-from-challenge/{{../../userId}}/{{this.id}}">Quit Challenge</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {{/each}}
+                    {{/each}}
+                </div>
+            {{/each}}
+        {{else}}
+            <div class="row">
+                <div class="dashboard-nochallenge-text">
+                    <div id="dashboard-nochallenge-line1">You have no active challenges!</div>
+                    <div id="dashboard-nochallenge-line2">Get started by creating your own challenge, or take a look at existing challenges</div>
+                </div>
             </div>
-        {{/each}}
+        {{/if}}
     </div>
 </div>
 

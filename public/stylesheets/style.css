@@ -132,6 +132,13 @@ h1 {
   display: inline;
 }
 
+.dashboard-nochallenge-text{
+  background-color: #E0E0E0;
+  text-align: center;
+  padding: 50px;
+  border-radius: 15px;
+}
+
 /* Homepage styling */
 #homepage-body{
   background: url("/images/background-bikes-dark.jpg") no-repeat center center fixed;

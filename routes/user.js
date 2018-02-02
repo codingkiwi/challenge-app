@@ -26,7 +26,7 @@ router.get('/dashboard', isLoggedIn, function(req, res, next){
         challengeChunk.push(result.slice(i, i + chunkSize));
     }
         var messages = req.flash('error');
-        res.render('dashboard/dashboard-home', {userId: req.user.id, challenges: challengeChunk, csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});                
+        res.render('dashboard/dashboard-home', {userId: req.user.id, challenges: challengeChunk, csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0, hasChallenges: challengeChunk.length > 0});                
     });
 });
 

@@ -3,7 +3,7 @@
 .navbar-default {
   background-color: #9131EB;
   border-color: #7B26C9;
-  height: 100px;
+  min-height: 100px;
 }
 .navbar-default .navbar-brand {
   color: #fcfeff;
@@ -107,7 +107,7 @@
     padding-left: 0px;
   }
   .navbar-default{
-    height: 50px;
+    min-height: 50px;
     margin-bottom: 0;
   }
   .navbar-collapse{

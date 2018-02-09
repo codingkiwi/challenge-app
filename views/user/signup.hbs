@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
-            <h1>Sign Up</h1>
+            <h1 class="spaced-title">Sign Up</h1>
                 {{#if hasErrors}}
                     <div class="alert alert-danger">
                         {{# each messages }}
@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group" class="control-label">
                     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-                    <button type="submit" class="btn btn-primary">Sign In</button>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
                 </div>
             </form>
         </div>

@@ -31,18 +31,20 @@
                                 {{progressAmounts}}<br>
                             {{/each}} --}}
                 </div>
-                <div id="add-progress-container">
-                    <button class="btn btn-primary" id="add-progress-button">Add Progress</button>
-                    <form id="add-progress-form" action="/challenge/add-progress" method="post">
-                        <div class="form-group">
-                            <label for="amount"></label>
-                            <input type="number" id="amount" name="amount" class="form-control" min="0">
-                        </div>
-                        <input type="hidden" name="challengeId" value="{{id}}">
-                        <input type="hidden" name="_csrf" value="{{../csrfToken}}">
-                        <button type="submit" class="btn btn-primary">Submit Progress</button>
-                    </form>
-                </div>
+                {{#if ../challengeJoined}}
+                    <div id="add-progress-container">
+                        <button class="btn btn-primary" id="add-progress-button">Add Progress</button>
+                        <form id="add-progress-form" action="/challenge/add-progress" method="post">
+                            <div class="form-group">
+                                <label for="amount"></label>
+                                <input type="number" id="amount" name="amount" class="form-control" min="0">
+                            </div>
+                            <input type="hidden" name="challengeId" value="{{id}}">
+                            <input type="hidden" name="_csrf" value="{{../csrfToken}}">
+                            <button type="submit" class="btn btn-primary">Submit Progress</button>
+                        </form>
+                    </div>
+                {{/if}}
                 <div id="challenge-detail-block">
                     <h3>Challenge Details</h3>
                     <hr class="header-underline">

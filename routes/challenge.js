@@ -50,6 +50,14 @@ router.get('/remove-progress/:challengeId/:progressId', challengeController.remo
 
 router.get('/:challengeId/participants', challengeController.getChallengeParticipants);
 
+router.get('/:challengeId/edit', challengeController.editChallenge);
+
+router.post('/:challengeId/submit-edits', challengeController.submitChallengeEdits)
+
+router.get('/:challengeId/submit-edits', function(req, res, next){
+    res.redirect('/challenge/discover');
+});
+
 module.exports = router;
 
 function isLoggedIn(req, res, next){

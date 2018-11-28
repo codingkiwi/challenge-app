@@ -10,6 +10,7 @@ var express = require('express');
 var Challenge = require('../models/challenge');
 var User = require('../models/user');
 
+
 module.exports = function ChallengeController(){
 
     this.storeCurrentUser = function(req, res, next){
@@ -136,14 +137,19 @@ module.exports = function ChallengeController(){
                     //check if user is already participating in challenge
                     var challengeAlreadyJoined = false;
                     var challengeRole = null; 
+                    var challengeAdmin = false;
 
                     for(var participant of result.participants){
                         if(participant.participantID == req.user.id){
                             challengeAlreadyJoined = true;
                             challengeRole = participant.participantRole;
+                            if(challengeRole == "admin"){
+                                challengeAdmin = true;
+                            }
                         }
                     }
-                    res.render('challenges/challenge-detail', {challengeRole: challengeRole, challengeJoined: challengeAlreadyJoined, participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, hasRankings: progressRankings.length > 0, hasProgress: userProgress.length > 0});
+
+                    res.render('challenges/challenge-detail', {challengeRole: challengeRole, challengeAdmin: challengeAdmin, challengeJoined: challengeAlreadyJoined, participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, hasRankings: progressRankings.length > 0, hasProgress: userProgress.length > 0});
                 }
             }
         }); 
@@ -310,6 +316,49 @@ module.exports = function ChallengeController(){
                 }
             }
         )
+    }
+
+    //retrieve challenge details and relevant participant information
+    this.editChallenge = function(req, res, next){
+
+        Challenge.findOne({"_id": req.params.challengeId}).exec(function(err, result){
+            if(err){
+                res.redirect('/challenge/discover');            
+            }
+            else {
+                if(!result){
+                    res.redirect('/challenge/discover'); 
+                }
+                else{    
+                    //check if user is participating in challenge & admin
+                    var challengeAlreadyJoined = false;
+                    var challengeRole = null; 
+
+                    for(var participant of result.participants){
+                        if(participant.participantID == req.user.id){
+                            challengeAlreadyJoined = true;
+                            challengeRole = participant.participantRole;
+                            if(challengeRole == "admin"){
+                                challengeAdmin = true;
+                            }
+                        }
+                    }
+
+                    if((challengeAlreadyJoined == false) || challengeRole != "admin"){
+                        url = '/challenge/' + req.params.challengeId;
+                        res.redirect(url); 
+                    }
+                    else{
+                        res.render('challenges/challenge-edit', {csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result});
+                    }
+                }
+            }
+        }); 
+    }
+
+    this.submitChallengeEdits = function(req, res, next){
+        url = '/challenge/' + req.params.challengeId;
+        res.redirect(url);
     }
 };
 

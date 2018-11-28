@@ -16,6 +16,8 @@
                     {{#if ../challengeJoined}}
                         <a href="/challenge/remove-from-challenge/{{../userId}}/{{id}}">leave challenge</a>
                         <p>Status: Joined as {{../challengeRole}}</p>
+                        {{#if ../challengeAdmin}}
+                        <a href="/challenge/{{id}}/edit">edit challenge</a>{{/if}}
                     {{else}}
                         <a href="/challenge/join-challenge/{{id}}">Join Challenge</a>
                         <p>Status: Not Joined</p>

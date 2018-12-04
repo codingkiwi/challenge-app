@@ -94,43 +94,46 @@ module.exports = function ChallengeController(){
                     res.redirect('/challenge/discover'); 
                 }
                 else{
-                    //sort progress listings by highest progression amount
-                    result.progress.sort(function(a, b){
-                        var keyA = a.progressAmounts,
-                            keyB = b.progressAmounts;
-                        if(keyA < keyB) return 1;
-                        if(keyA > keyB) return -1;
-                        return 0;
-                    });
+                    console.log(result.progress);
+                    if(result.progress){
+                        //sort progress listings by highest progression amount
+                        result.progress.sort(function(a, b){
+                            var keyA = a.progressAmounts,
+                                keyB = b.progressAmounts;
+                            if(keyA < keyB) return 1;
+                            if(keyA > keyB) return -1;
+                            return 0;
+                        });
 
-                    //put top 5 unique progress logs in a new array, add rank number and progress remaining
-                    //if goal is surpassed, show 0 remaining
-                    var progressRankings = [];
-                    for(var progressPoint of result.progress){
-                        var userAlreadyHasRanking = false;
-                        if (progressRankings.length >= 5){
-                            break;
-                        }
-                        else{
-                            for(var ranking of progressRankings){
-                                if(ranking.progressParticipantId.equals(progressPoint.progressParticipantId)){
-                                    userAlreadyHasRanking = true;
+                        //put top 5 unique progress logs in a new array, add rank number and progress remaining
+                        //if goal is surpassed, show 0 remaining
+                        var progressRankings = [];
+                        for(var progressPoint of result.progress){
+                            var userAlreadyHasRanking = false;
+                            if (progressRankings.length >= 5){
+                                break;
+                            }
+                            else{
+                                for(var ranking of progressRankings){
+                                    if(ranking.progressParticipantId.equals(progressPoint.progressParticipantId)){
+                                        userAlreadyHasRanking = true;
+                                    }
+                                }
+                                if(!userAlreadyHasRanking){             
+                                    progressRankings.push(progressPoint);
                                 }
                             }
-                            if(!userAlreadyHasRanking){             
-                                progressRankings.push(progressPoint);
-                            }
                         }
-                    }
-                    for(var i = 0; i < progressRankings.length; i++){
-                        progressRankings[i].rank = i+1;
-                        progressRankings[i].progressRemaining = (result.goalAmount - progressRankings[i].progressAmounts) < 0 ? 0 : (result.goalAmount - progressRankings[i].progressAmounts);
-                    }
+                        for(var i = 0; i < progressRankings.length; i++){
+                            progressRankings[i].rank = i+1;
+                            progressRankings[i].progressRemaining = (result.goalAmount - progressRankings[i].progressAmounts) < 0 ? 0 : (result.goalAmount - progressRankings[i].progressAmounts);
+                        }
 
-                    var userProgress = [];
-                    for(var progressPoint of result.progress){
-                        if(progressPoint.progressParticipantId.equals(req.user.id)){
-                            userProgress.push(progressPoint);
+                        var userProgress = [];
+                        for(var progressPoint of result.progress){
+                            if(progressPoint.progressParticipantId.equals(req.user.id)){
+                                userProgress.push(progressPoint);
+                            }
                         }
                     }
  
@@ -357,8 +360,48 @@ module.exports = function ChallengeController(){
     }
 
     this.submitChallengeEdits = function(req, res, next){
-        url = '/challenge/' + req.params.challengeId;
-        res.redirect(url);
+        //Form validation using express-validator
+        req.checkBody('name', 'No challenge name entered').notEmpty();
+        req.checkBody('description', 'No description entered').notEmpty();
+        req.checkBody('goalType', 'No goal type entered').notEmpty();
+        req.checkBody('goalAmount', 'Not a valid goal amount').notEmpty();
+        req.checkBody('categories', 'No categories entered').notEmpty()
+        var errors = req.validationErrors();
+        if (errors) {
+            var messages = [];
+            errors.forEach(function(error) {
+                messages.push(error.msg);
+            });
+            //should redirect to correct challenge...
+            res.render('challenges/create-challenge', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0})
+        }
+        else{
+            Challenge.update({
+                "_id" : req.params.challengeId
+                },
+                {
+                    $set:
+                    {
+                        name : req.body.name,
+                        description: req.body.description,
+                        goalType : req.body.goalType,
+                        goalAmount : req.body.goalAmount,
+                        categories :  [req.body.categories]
+                    }
+                },
+                function(err, result){
+                    if(err){
+                        console.log(err);
+                        url = '/challenge/' + req.params.challengeId
+                        res.redirect(url)
+                    }
+                    else {
+                        url = '/challenge/' + req.params.challengeId
+                        res.redirect(url)
+                    }
+                }
+            )
+        }
     }
 };
 

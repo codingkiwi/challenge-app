@@ -94,7 +94,6 @@ module.exports = function ChallengeController(){
                     res.redirect('/challenge/discover'); 
                 }
                 else{
-                    console.log(result.progress);
                     if(result.progress){
                         //sort progress listings by highest progression amount
                         result.progress.sort(function(a, b){
@@ -119,15 +118,27 @@ module.exports = function ChallengeController(){
                                         userAlreadyHasRanking = true;
                                     }
                                 }
-                                if(!userAlreadyHasRanking){             
+                                if(!userAlreadyHasRanking){   
+                                    if(progressPoint.progressParticipantId == req.user.id){
+                                        progressPoint.progressThisUserFlag = "true";
+                                    }      
                                     progressRankings.push(progressPoint);
                                 }
                             }
                         }
+
                         for(var i = 0; i < progressRankings.length; i++){
+                            if(progressRankings[i].progressParticipantId == req.user.id){
+                                progressRankings[i].progressThisUserFlag = true;
+                            }  
+                            else{
+
+                            }
                             progressRankings[i].rank = i+1;
                             progressRankings[i].progressRemaining = (result.goalAmount - progressRankings[i].progressAmounts) < 0 ? 0 : (result.goalAmount - progressRankings[i].progressAmounts);
                         }
+
+                        console.log(progressRankings);
 
                         var userProgress = [];
                         for(var progressPoint of result.progress){
@@ -256,7 +267,6 @@ module.exports = function ChallengeController(){
     }
 
     this.addProgress = function(req, res, next){
-        console.log('here');
         req.checkBody('amount', 'Not a valid amount').notEmpty();
         var errors = req.validationErrors();
         if(errors){

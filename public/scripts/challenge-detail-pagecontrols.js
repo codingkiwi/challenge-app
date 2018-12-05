@@ -5,3 +5,4 @@ $("#add-progress-button").click(function () {
         $("#add-progress-form").slideUp("fast");
     }   
 });
+

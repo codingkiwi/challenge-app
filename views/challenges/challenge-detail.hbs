@@ -58,7 +58,7 @@
                 </div>
             {{/with}}
             <h3>Top 5</h3>
-            <table class="table table-condensed">
+            <table class="table table-condensed" id="challenge-rankings-table">
                 <tr id="challenge-detail-table-header">
                     <th>Rank</th>
                     <th>Participant</th>
@@ -67,7 +67,7 @@
                 </tr>
                 {{#if hasRankings}}
                     {{#each rankings}}
-                        <tr>
+                        <tr {{#if progressThisUserFlag}}id="this-users-ranking-row"{{/if}}>
                             <td>{{rank}}</td>
                             <td><a href="/user/profile/{{progressParticipantId}}">{{progressParticipantName}}</a></td>
                             <td>{{progressAmounts}}</td>
@@ -91,12 +91,12 @@
                 </tr>
                 {{#if hasProgress}}
                     {{#each progress}}
-                    <tr>
-                        <td>{{progressDate}}</td>
-                        <td>{{progressParticipantName}}</td>
-                        <td>{{progressAmounts}}</td>
-                        <td><a class="x-remove-link" href="/challenge/remove-progress/{{../challenge.id}}/{{this.id}}">&#10006</a></td>
-                    </tr>
+                        <tr{{#if progressThisUserFlag}} id="this-user-rankings-row"{{/if}}>
+                            <td>{{progressDate}}</td>
+                            <td>{{progressParticipantName}}</td>
+                            <td>{{progressAmounts}}</td>
+                            <td><a class="x-remove-link" href="/challenge/remove-progress/{{../challenge.id}}/{{this.id}}">&#10006</a></td>
+                        </tr>
                     {{/each}}
             </table>
                 {{else}}

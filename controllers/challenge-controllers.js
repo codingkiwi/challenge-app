@@ -107,6 +107,8 @@ module.exports = function ChallengeController(){
                         //put top 5 unique progress logs in a new array, add rank number and progress remaining
                         //if goal is surpassed, show 0 remaining
                         var progressRankings = [];
+                        var goalReachedFlag = false;
+
                         for(var progressPoint of result.progress){
                             var userAlreadyHasRanking = false;
                             if (progressRankings.length >= 5){
@@ -123,6 +125,11 @@ module.exports = function ChallengeController(){
                                         progressPoint.progressThisUserFlag = "true";
                                     }      
                                     progressRankings.push(progressPoint);
+
+                                    //check if progress is above goal amount
+                                    if(progressPoint.progressAmounts >= result.goalAmount){
+                                        goalReachedFlag = true;
+                                    }
                                 }
                             }
                         }
@@ -137,8 +144,6 @@ module.exports = function ChallengeController(){
                             progressRankings[i].rank = i+1;
                             progressRankings[i].progressRemaining = (result.goalAmount - progressRankings[i].progressAmounts) < 0 ? 0 : (result.goalAmount - progressRankings[i].progressAmounts);
                         }
-
-                        console.log(progressRankings);
 
                         var userProgress = [];
                         for(var progressPoint of result.progress){
@@ -162,8 +167,20 @@ module.exports = function ChallengeController(){
                             }
                         }
                     }
-
-                    res.render('challenges/challenge-detail', {challengeRole: challengeRole, challengeAdmin: challengeAdmin, challengeJoined: challengeAlreadyJoined, participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, hasRankings: progressRankings.length > 0, hasProgress: userProgress.length > 0});
+                    
+                    //render challenge detail page depending on what goal type the challenge is
+                    if(result.goalType == "getToGoal"){
+                        console.log("render get to goal" + goalReachedFlag);
+                        res.render('challenges/challenge-detail-getToGoal', {goalReachedFlag: goalReachedFlag, challengeRole: challengeRole, challengeAdmin: challengeAdmin, challengeJoined: challengeAlreadyJoined, participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, hasRankings: progressRankings.length > 0, hasProgress: userProgress.length > 0});
+                    }
+                    else if(result.goalType == "firstToGoal"){
+                        console.log("render first to goal" + goalReachedFlag);
+                        res.render('challenges/challenge-detail-firstToGoal', {goalReachedFlag: goalReachedFlag, challengeRole: challengeRole, challengeAdmin: challengeAdmin, challengeJoined: challengeAlreadyJoined, participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, hasRankings: progressRankings.length > 0, hasProgress: userProgress.length > 0});
+                    }
+                    else{
+                        console.log("render highest to goal" + goalReachedFlag);
+                        res.render('challenges/challenge-detail-highestGoal', {goalReachedFlag: goalReachedFlag, challengeRole: challengeRole, challengeAdmin: challengeAdmin, challengeJoined: challengeAlreadyJoined, participantNumber: result.participants.length, csrfToken: req.csrfToken(), userId: req.user.id, message: req.flash('error'), hasErrors: req.flash('error').length > 0, challenge: result, rankings: progressRankings, progress: userProgress, hasRankings: progressRankings.length > 0, hasProgress: userProgress.length > 0});                        
+                    }
                 }
             }
         }); 

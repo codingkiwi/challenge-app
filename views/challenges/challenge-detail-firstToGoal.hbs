@@ -1,0 +1,117 @@
+<div class="container">
+    {{#if hasErrors}}
+        <div class="alert alert-danger">
+            {{#each messages }}
+                <p>{{ this }}</p>
+            {{/each}}
+        </div> 
+    {{/if}}
+        <div class="row">
+        <div class="col-md-5 col-md-offset-1">
+            {{#with challenge}}
+                <h1>{{name}}</h1>
+                <hr class="header-underline">
+                <div id="challenge-detail-links">
+                    Participants: <a href="/challenge/{{id}}/participants">{{../participantNumber}}</a>
+                    {{#if ../challengeJoined}}
+                        <a href="/challenge/remove-from-challenge/{{../userId}}/{{id}}">leave challenge</a>
+                        <p>Status: Joined as {{../challengeRole}}</p>
+                        {{#if ../challengeAdmin}}
+                        <a href="/challenge/{{id}}/edit">edit challenge</a>{{/if}}
+                    {{else}}
+                        <a href="/challenge/join-challenge/{{id}}">Join Challenge</a>
+                        <p>Status: Not Joined</p>
+                    {{/if}}
+                    {{#if ../goalReachedFlag}}<p>Some participants have reached the goal! Challenge is now locked</p>{{/if}}
+                            {{!-- {{#each participants}}
+                                {{#if participantUsername}}
+                                    <a href="#">{{participantUsername}}</a>
+                                {{/if}}
+                                <p>{{participantRole}}</p>
+                            {{/each}}
+                            {{#each progress}}
+                                {{progressParticipantName}}
+                                {{progressAmounts}}<br>
+                            {{/each}} --}}
+                </div>
+                {{#if ../challengeJoined}}{{#unless ../goalReachedFlag}}
+                    <div id="add-progress-container">
+                        <button class="btn btn-primary" id="add-progress-button">Add Progress</button>
+                        <form id="add-progress-form" action="/challenge/add-progress" method="post">
+                            <div class="form-group">
+                                <label for="amount"></label>
+                                <input type="number" id="amount" name="amount" class="form-control" min="0">
+                            </div>
+                            <input type="hidden" name="challengeId" value="{{id}}">
+                            <input type="hidden" name="_csrf" value="{{../csrfToken}}">
+                            <button type="submit" class="btn btn-primary">Submit Progress</button>
+                        </form>
+                    </div>
+                {{/unless}}{{/if}}
+                <div id="challenge-detail-block">
+                    <h3>Challenge Details</h3>
+                    <hr class="header-underline">
+                    <p><strong>Description:</strong> {{description}}</p>
+                    <p><strong>Start Date:</strong> {{startDate}}</p>
+                    <p><strong>End Date:</strong> {{endDate}}</p>
+                    <p><strong>Goal Type:</strong> {{goalType}}</p>
+                    <p><strong>Goal Amount:</strong> {{goalAmount}}</p>
+                </div>
+            {{/with}}
+            <h3>Top 5</h3>
+            <table class="table table-condensed" id="challenge-rankings-table">
+                <tr id="challenge-detail-table-header">
+                    <th>Rank</th>
+                    <th>Participant</th>
+                    <th>Progress</th>
+                    <th>Progress Remaining</th>
+                </tr>
+                {{#if hasRankings}}
+                    {{#each rankings}}
+                        <tr {{#if progressThisUserFlag}}id="this-users-ranking-row"{{/if}}>
+                            <td>{{rank}}</td>
+                            <td><a href="/user/profile/{{progressParticipantId}}">{{progressParticipantName}}</a></td>
+                            <td>{{progressAmounts}}</td>
+                            <td>{{progressRemaining}}</td>
+                        </tr>
+                    {{/each}}
+            </table>
+                {{else}}
+            </table>
+                <p>No one has logged any progress yet</p>
+                {{/if}}
+        </div>
+        <div class="col-md-5">
+            <h3>Your Progress</h3>
+            <table class="table table-condensed">
+                <tr id="challenge-detail-table-header">
+                    <th>Date</th>
+                    <th>Participant</th>
+                    <th>Progress</th>
+                    <th>Remove</th>
+                </tr>
+                {{#if hasProgress}}
+                    {{#each progress}}
+                        <tr{{#if progressThisUserFlag}} id="this-user-rankings-row"{{/if}}>
+                            <td>{{progressDate}}</td>
+                            <td>{{progressParticipantName}}</td>
+                            <td>{{progressAmounts}}</td>
+                            <td><a class="x-remove-link" href="/challenge/remove-progress/{{../challenge.id}}/{{this.id}}">&#10006</a></td>
+                        </tr>
+                    {{/each}}
+            </table>
+                {{else}}
+            </table>
+                <p>You have no progress logged</p>
+                {{/if}}
+        </div>
+        <div id="chart"></div>
+    </div>  
+</div>
+<!--
+scripts to use if charts are needed
+<script src="/scripts/frappe-charts.min.iife.js"></script>
+<script src="/scripts/progress-chart.js"></script>
+-->
+<!-- scripts for button, dropdown, and generic page controls -->
+<script src="/scripts/challenge-detail-pagecontrols.js"></script>

@@ -63,7 +63,6 @@
                     <th>Rank</th>
                     <th>Participant</th>
                     <th>Progress</th>
-                    <th>Progress Remaining</th>
                 </tr>
                 {{#if hasRankings}}
                     {{#each rankings}}
@@ -71,7 +70,6 @@
                             <td>{{rank}}</td>
                             <td><a href="/user/profile/{{progressParticipantId}}">{{progressParticipantName}}</a></td>
                             <td>{{progressAmounts}}</td>
-                            <td>{{progressRemaining}}</td>
                         </tr>
                     {{/each}}
             </table>

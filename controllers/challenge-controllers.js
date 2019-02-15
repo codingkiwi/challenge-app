@@ -39,7 +39,7 @@ module.exports = function ChallengeController(){
         req.checkBody('endDate', 'Not a valid end date').notEmpty();
         req.checkBody('goalType', 'No goal type entered').notEmpty();
         req.checkBody('goalAmount', 'Not a valid goal amount').notEmpty();
-        req.checkBody('categories', 'No categories entered').notEmpty()
+        req.checkBody('categories', 'No categories entered').notEmpty();
         var errors = req.validationErrors();
         if (errors) {
             var messages = [];
@@ -57,6 +57,7 @@ module.exports = function ChallengeController(){
                 creationDate : req.body.startDate,
                 goalType : req.body.goalType,
                 goalAmount : req.body.goalAmount,
+                image: req.body.defaultImage,
                 participants : [
                     {
                         participantID: req.user.id,
@@ -196,7 +197,18 @@ module.exports = function ChallengeController(){
                     res.redirect('/challenge/discover'); 
                 }
                 else{
-                    res.render('challenges/challenge-participants', {participants: result.participants, challengeName: result.name, challengeId: result._id});
+                    var challengeAdmin = false;
+                    
+                    for(var participant of result.participants){
+                        if(participant.participantID == req.user.id){
+                            challengeAlreadyJoined = true;
+                            challengeRole = participant.participantRole;
+                            if(challengeRole == "admin"){
+                                challengeAdmin = true;
+                            }
+                        }
+                    }
+                    res.render('challenges/challenge-participants', {participants: result.participants, challengeName: result.name, challengeId: result._id, challengeAdmin: challengeAdmin});
                 }
             }
         });        

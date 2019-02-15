@@ -24,7 +24,8 @@ var challengeSchema = mongoose.Schema({
     goalAmount: {type: Number, required: true},
     participants : {type : [participantSchema], required: true},
     progress : {type: [progressSchema], required: false},
-    categories : {type: [String], required: true}
+    categories : {type: [String], required: true},
+    image : {type: String, required: true}
 });
 
 module.exports = mongoose.model('Challenge', challengeSchema);
